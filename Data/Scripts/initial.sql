@@ -49,16 +49,16 @@ CREATE TABLE [dbo].[KommentarLike](
 	CONSTRAINT FK_Kommentar_Likes FOREIGN KEY ([KommentarId]) REFERENCES [dbo].[Kommentar] ([Id])
 );
 
-CREATE TABLE Datei{
+CREATE TABLE Datei(
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Name] [varchar(50)] NULL,
-	[File] [varbinary(max)] NOT NULL,
-	CONSTRAINT PK_Datei PRIMARY KEY CLUSTERED (Id)
-};
+	[Name] [varchar](50) NULL,
+	[File] [varbinary](max) NOT NULL,
+	CONSTRAINT PK_Datei PRIMARY KEY CLUSTERED ([Id])
+);
 
-CREATE TABLE BeitragDatei{
+CREATE TABLE BeitragDatei(
 	[Id] [int] IDENTITY (1,1) NOT NULL,
 	[BeitragId] [int] NOT NULL,
 	[DateiId] [int] NOT NULL,
-	CONSTRAINT PK_BeitragDatei PRIMARY KEY CLUSTERED (Id)
-};
+	CONSTRAINT PK_BeitragDatei PRIMARY KEY CLUSTERED ([Id])
+);
