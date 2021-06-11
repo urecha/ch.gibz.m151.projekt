@@ -8,6 +8,8 @@ import { ArticleService } from '../../data/services/article.service';
 })
 export class HomeComponent implements OnInit {
 
+  articles: Article[];
+
   constructor(
     private readonly articleService: ArticleService,
   ) { }
@@ -15,6 +17,4 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.articleService.getAll().toPromise().then(articles => this.articles = articles);
   }
-
-  articles: Article[];
 }
