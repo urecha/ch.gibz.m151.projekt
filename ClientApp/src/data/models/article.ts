@@ -1,10 +1,10 @@
 
 export class Article {
-  Autor: string;
+  autor: string;
 
-  Titel: string;
+  titel: string;
 
-  Inhalt: string;
+  inhalt: string;
 
-  BeitragLikes: number;
+  beitragLikes: number;
 }
