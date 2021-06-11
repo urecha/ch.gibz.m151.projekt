@@ -7,7 +7,7 @@ import { Article } from '../models/article';
   providedIn: 'root'
 })
 export class ArticleService {
-  readonly baseRoute = '/api/Beitrag';
+  readonly baseRoute = '/Beitrag';
 
   constructor(
     private readonly httpClient: HttpClient,
