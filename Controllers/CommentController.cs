@@ -10,15 +10,16 @@ using System.Threading.Tasks;
 
 namespace ch.gibz.m151.projekt.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class BeitragController : ControllerBase
+    public class KommentarController : ControllerBase
     {
         private readonly ILogger<BeitragController> _logger;
 
         private BuenzliTreffContext _context = new BuenzliTreffContext();
 
-        public BeitragController(ILogger<BeitragController> logger)
+        public KommentarController(ILogger<BeitragController> logger)
         {
             _logger = logger;
         }
@@ -28,6 +29,25 @@ namespace ch.gibz.m151.projekt.Controllers
         {
             BuenzliTreffContext buenzliTreffContext = new BuenzliTreffContext();
             var Beitrags = buenzliTreffContext.Beitrags
+                .Include(b => b.Autor)
+                .Include(b => b.Titel)
+                .Include(b => b.Inhalt)
+                .Include(b => b.BeitragLikes)
+                .ToList();
+            return Beitrags;
+        }
+
+        [HttpGet]
+        public IEnumerable<Beitrag> GetTop24h()
+        {
+            var Beitrags = _context.Beitrags
+                .Include(b => b.Autor)
+                .Include(b => b.Titel)
+                .Include(b => b.Inhalt)
+                .Include(b => b.BeitragLikes)
+                .Include(b => b.ErstelltAm)
+                .OrderBy(b => b.ErstelltAm)
+                .Where(b => b.ErstelltAm < (DateTime.Now).AddDays(-1))
                 .ToList();
             return Beitrags;
         }
