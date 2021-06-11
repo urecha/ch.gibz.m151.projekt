@@ -1,4 +1,5 @@
-﻿using ch.gibz.m151.projekt.Models;
+﻿using ch.gibz.m151.projekt.Data;
+using ch.gibz.m151.projekt.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
