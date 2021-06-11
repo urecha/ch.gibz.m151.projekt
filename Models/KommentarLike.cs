@@ -13,6 +13,6 @@ namespace ch.gibz.m151.projekt.Models
         public int? IstDislike { get; set; }
 
         public virtual Kommentar Kommentar { get; set; }
-        public virtual User User { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }

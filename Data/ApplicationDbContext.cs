@@ -10,12 +10,19 @@ using System.Threading.Tasks;
 
 namespace ch.gibz.m151.projekt.Data
 {
-    public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
+    public partial class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {
         public ApplicationDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
+
+        public virtual DbSet<Beitrag> Beitrags { get; set;  }
+        public virtual DbSet<BeitragDatei> BeitragDateis { get; set; }
+        public virtual DbSet<BeitragLike> BeitragLikes { get; set; }
+        public virtual DbSet<Datei> Dateis { get; set; }
+        public virtual DbSet<Kommentar> Kommentars { get; set; }
+        public virtual DbSet<KommentarLike> KommentarLikes { get; set; }
     }
 }
