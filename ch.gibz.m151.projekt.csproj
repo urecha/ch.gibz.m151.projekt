@@ -32,10 +32,16 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\data\models\article.ts" />
+    <None Remove="ClientApp\src\data\models\comment.ts" />
+    <None Remove="ClientApp\src\data\models\User.ts" />
+    <None Remove="ClientApp\src\data\services\comment.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\data\models\article.ts" />
+    <TypeScriptCompile Include="ClientApp\src\data\models\comment.ts" />
+    <TypeScriptCompile Include="ClientApp\src\data\models\user.ts" />
+    <TypeScriptCompile Include="ClientApp\src\data\services\comment.service.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
