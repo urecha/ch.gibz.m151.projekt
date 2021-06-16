@@ -1,0 +1,22 @@
+<div>
+  <header class="row">
+
+    <div class="col-8">
+      Verzapft vom {{article.autor}} am {{article.datum}}
+    </div>
+    <div class="col-auto">
+      <span><i class="fa fa-thumbs-up"></i> {{article.beitragLikes}} findeds laess</span>
+      <span title="Din senf dezuegeh"><i class="fa fa-plus-circle"></i></span>
+    </div>
+
+  </header>
+  <div class="row">
+    <div class="col">
+      <h5>{{article.titel}}<small>{{article.autor}}</small></h5>
+      <p>{{article.inhaltPreview}}</p>
+    </div>
+    <div *ngIf="bilder && bilder.length" class="col-4">
+      <img [src]="bilder[0]">
+    </div>
+  </div>
+</div>

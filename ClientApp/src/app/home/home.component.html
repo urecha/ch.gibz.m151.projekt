@@ -1,12 +1,23 @@
-<h1>Hello, world!</h1>
 
-<p>Please go and f*** yourself</p>
+<div class="row container-fluid">
+  <article class="col-8">
+    <!-- filter/sortierig/biitrag erstelle -->
+    <div class="container row m-2 p-2 helper-bar">
+      <span class="col"><i class="fa fa-fire"></i> Laessigkeit</span>
+      <span class="col"><i class="fa fa-sun"></i> Neus zueg</span>
+      <span class="col"><i class="fa fa-poo"></i> Chabis</span>
+      <span class="col-auto"><i class="fa fa-plus-square"></i> Artikel verfasse</span>
+    </div>
 
-<label>Write something here and then we save it. (Not yet)</label>
-<textarea [(ngModel)]="article"></textarea>
+    <div *ngFor="let article of articles">
+      
+    </div>
+  </article>
 
-<div *ngFor="let article of articles">
-  <h5>{{article.titel}}<small>{{article.autor}}</small></h5>
-  <p>{{article.inhalt}}</p>
-  <div><span>{{article.beitragLikes}} Likes</span></div>
+  <aside class="col-4">
+    <!-- gröschti halbschüeh etc components -->
+    <h5>Hiera halbschueh</h5>
+  </aside>
 </div>
+
+
