@@ -1,1 +1,29 @@
-<p>article works!</p>
+<div class="row article-container">
+    <div class="col-8">
+        <!-- user summary -->
+
+        <!--article -->
+        <div class="article row">
+            <div class="col-8">
+                <h4>{{article.titel}}<small class="text-muted">{{article.datum | date:'DD/MMM/YYYY'}</small></h4>
+                <p>
+                    {{article.inhalt}}
+                </p>
+            </div>
+            <div class="col-4">
+                <!-- images -->
+            </div>
+        </div>
+        <footer>
+            <!-- the like thing -->
+        </footer>
+    </div>
+    <!-- comments -->
+    <div class="col-4">
+        <!-- button to add comment -->
+        <ng-container *ngFor="let comment of article.kommentare">
+            <!-- kommentar -->
+        </ng-container>
+    </div>
+</div>
+<!-- here or somewhere else, modal to write comments in -->

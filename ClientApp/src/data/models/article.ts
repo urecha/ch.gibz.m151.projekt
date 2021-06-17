@@ -1,15 +1,35 @@
-import { User } from "./user";
+import { ArticleLike } from "./articleLike";
+import { UserSummary } from "./user";
 
 export class Article {
-  id: string;
+  id: number;
 
-  autor: User;
+  autor: UserSummary;
 
   titel: string;
+  
+  datum: Date;
 
   inhalt: string;
 
-  beitragLikes: number;
+  beitragLikes: ArticleLike[];
 
-  beitragDislikes: number;
+  kommentare: Comment[]; 
+
+  bilder: string[];
+
+}
+
+export class ArticleSummary{
+  id: number;
+
+  autor: UserSummary;
+
+  titel: string;
+
+  inhaltPreview: string;
+
+  datum: Date;
+
+  beitragLikes: ArticleLike[]; //like-objects please.
 }

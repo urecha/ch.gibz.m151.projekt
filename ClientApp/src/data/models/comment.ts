@@ -1,13 +1,18 @@
-import { User } from "./user";
+import { CommentLike } from "./commentLike";
+import { UserSummary } from "./user";
 
-export class Comment {
-  id: string;
+export class Comment{
+    id: number;
 
-  articleId: string;
+    articleId: number;
 
-  autor: User;
+    titel: string;
 
-  kommentarLikes: number;
+    inhalt: string;
 
-  kommentarDislikes: number;
+    datum: Date;
+
+    autor: UserSummary;
+
+    likes: CommentLike[];
 }
