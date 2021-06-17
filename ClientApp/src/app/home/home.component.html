@@ -3,9 +3,23 @@
   <article class="col-8">
     <!-- filter/sortierig/biitrag erstelle -->
     <div class="container row m-2 p-2 helper-bar">
-      <span class="col"><i class="fa fa-fire"></i> Laessigkeit</span>
-      <span class="col"><i class="fa fa-sun"></i> Neus zueg</span>
-      <span class="col"><i class="fa fa-poo"></i> Chabis</span>
+      <div class="col-8">
+        <label class="text-muted text-small mr-2">Sortiere nach</label>
+        <div class="abegumper">
+          <span>{{currentSortingMethod}}</span>
+          <div class="abegumper-content">
+            <div class="abegumper-item" (click)="selectSortingMethod(SortingMethod.HOTTEST)">
+              <a><i class="fa fa-fire"></i> Laessigkeit</a>
+            </div>
+            <div class="abegumper-item" (click)="selectSortingMethod(SortingMethod.SHITTIEST)">
+              <a><i class="fa fa-poo"></i> Chabis</a>
+            </div>
+            <div class="abegumper-item" (click)="selectSortingMethod(SortingMethod.LATEST)">
+              <a><i class="fa fa-sun"></i> Neus zueg</a>
+            </div>
+          </div>
+        </div>
+      </div>
       <span class="col-auto"><i class="fa fa-plus-square"></i> Artikel verfasse</span>
     </div>
 
@@ -15,7 +29,7 @@
   </article>
 
   <aside class="col-4">
-    <!-- gröschti halbschüeh etc components -->
+    <!-- grÃ¶schti halbschÃ¼eh etc components -->
     <h5>Hiera halbschueh</h5>
   </aside>
 </div>
