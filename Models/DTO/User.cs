@@ -23,5 +23,28 @@ namespace ch.gibz.m151.projekt.Models.DTO
         public int BuenzliRanking { get; set; }
         public int HalbschuehRanking { get; set; }
 
+        public int TotalLikes
+        {
+            get
+            {
+                var totalLikes = getArticleLikes() + getCommentLikes();
+                return totalLikes;
+            }
+        }
+
+        public int getArticleLikes()
+        {
+            return ArticleLikes
+                .Where(al => al.IstDislike == false)
+                .Count();
+        }
+
+        public int getCommentLikes()
+        {
+            return CommentLikes
+                .Where(cl => cl.IstDislike == false)
+                .Count();
+        }
+
     }
 }

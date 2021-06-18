@@ -23,6 +23,20 @@ namespace ch.gibz.m151.projekt.Models
         public virtual ICollection<Beitrag> Beitrags { get; set; }
         public virtual ICollection<KommentarLike> KommentarLikes { get; set; }
         public virtual ICollection<Kommentar> Kommentars { get; set; }
+
+        public int getArticleLikes()
+        {
+            return KommentarLikes
+                .Where(al => al.IstDislike == false)
+                .Count();
+        }
+
+        public int getCommentLikes()
+        {
+            return BeitragLikes
+                .Where(cl => cl.IstDislike == false)
+                .Count();
+        }
     }
 
 }
