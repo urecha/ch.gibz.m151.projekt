@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { User } from 'src/data/models/user';
 import { UserService } from 'src/data/services/user.service';
@@ -15,22 +16,48 @@ export class HomeComponent implements OnInit {
 
   public articles: ArticleSummary[];
   public buenzlis: User[];
-  public halbschueh: User[];  
+  public halbschueh: User[];
 
   public loading: boolean = true;
 
-  public sortingMethod$: Observable<SortingMethod>;
   public currentSortingMethod: SortingMethod;
+  public currentBuenzliSortingMethod: BuenzliSortingMethod;
 
   constructor(
     private readonly articleService: ArticleService,
     private readonly userService: UserService,
+    private readonly router: Router,
   ) { }
 
   async ngOnInit() {
     this.selectSortingMethod(SortingMethod.LATEST);
-    this.buenzlis = await this.userService.getTopBuenzlis().toPromise();
-    this.halbschueh = await this.userService.getTopHalbschueh().toPromise();
+    this.selectBuenzliSortingMethod(BuenzliSortingMethod.OVERALL);
+  }
+
+  public createArticle(){
+    this.router.navigate(['article', 'new']);
+  }
+
+  public async selectBuenzliSortingMethod(method: BuenzliSortingMethod) {
+    this.currentBuenzliSortingMethod = method;
+    switch (this.currentBuenzliSortingMethod) {
+      case BuenzliSortingMethod.ARTICLES: {
+        this.buenzlis = await this.userService.getTopBuenzlisForArticles().toPromise();
+        this.halbschueh = await this.userService.getTopHalbschuehForArticles().toPromise();
+        break;
+      }
+      case BuenzliSortingMethod.COMMENTS: {
+        this.buenzlis = await this.userService.getTopBuenzlisForComments().toPromise();
+        this.halbschueh = await this.userService.getTopHalbschuehForComments().toPromise();
+        break;
+      }
+      case BuenzliSortingMethod.OVERALL: 
+      default: {
+        this.buenzlis = await this.userService.getTopBuenzlis().toPromise();
+        this.halbschueh = await this.userService.getTopHalbschueh().toPromise();
+        break;
+      }
+    }
   }
 
   public selectSortingMethod(method: SortingMethod) {
@@ -76,8 +103,8 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  public getIconClassForSortingMethod(method: SortingMethod){
-    switch(method){
+  public getIconClassForSortingMethod(method: SortingMethod) {
+    switch (method) {
       case SortingMethod.HOTTEST: return 'fa-fire';
       case SortingMethod.SHITTIEST: return 'fa-poo';
       case SortingMethod.LATEST:

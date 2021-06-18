@@ -19,7 +19,7 @@
           </div>
         </div>
       </div>
-      <span class="col-auto clickable"><i class="fa fa-plus-square"></i> Artikel verfasse</span>
+      <span class="col-auto clickable" (click)="createArticle()" [style.align-self]="'center'"><i class="fa fa-plus-square"></i> Öppis verzapfe</span>
     </div>
 
     <div *ngFor="let article of articles">
@@ -27,8 +27,19 @@
     </div>
   </article>
 
-  <aside class="col-4">
-    <!-- gröschti halbschüeh etc components -->
-    <h5>Hiera halbschueh</h5>
+  <aside class="col-4 p-2 classments">
+    <div class="classment">
+    <h5><i class="fa fa-fire mr-1"></i>Top buenzlis</h5>
+      <ng-container *ngFor="let buenzli of buenzlis">
+        <app-user-summary [user]="buenzli"></app-user-summary>
+      </ng-container>
+    </div>
+    <hr>
+    <div class="classment">
+    <h5><i class="fa fa-poo mr-1"></i>Top halbschueh</h5>
+      <ng-container *ngFor="let halbschueh of halbschueh">
+        <app-user-summary [user]="halbschueh"></app-user-summary>
+      </ng-container>
+    </div>
   </aside>
 </div>
