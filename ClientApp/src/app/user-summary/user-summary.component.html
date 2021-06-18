@@ -1,13 +1,13 @@
 <!-- get the svg initial generator from labratter in here pls -->
 <div class="user-summary row">
-    <div class="col-3">
-        <!-- the initials profile picture-->
-    </div>
+    <div class="col-3" [innerHtml]="picture"></div>
     <div class="col">
-        {{summary.name}}
+        {{user.name}}
     </div>
-    <div class="col-auto">
-        <!-- badges for halbschueh / bünzli ranking-->
-        <i class="fa fa-fire"></i>
+    <div class="col-auto" *ngIf="user.buenzliRanking <= user.halbschuehRanking">
+        <span title="Buenzli-Rang"><i class="fa fa-award mr-1"></i>{{user.buenzliRanking}}</span>
+    </div>
+    <div class="col-auto" *ngIf="user.buenzliRanking > user.halbschuehRanking">
+        <span title="Halbschueh-Rang"><i class="fa fa-poo mr-1"></i>{{user.halbschuehRanking}}</span>
     </div>
 </div>

@@ -5,7 +5,7 @@
       <div class="col-8">
         <label class="text-muted text-small mr-2">Sortiere nach</label>
         <div class="abegumper">
-          <span>{{currentSortingMethod}}</span>
+          <span><i class="fa mr-1" [ngClass]="getIconClassForSortingMethod(currentSortingMethod)"></i>{{currentSortingMethod}}</span>
           <div class="abegumper-content">
             <div class="abegumper-item" (click)="selectSortingMethod(SortingMethod.HOTTEST)">
               <a><i class="fa fa-fire"></i> Laessigkeit</a>
@@ -19,11 +19,11 @@
           </div>
         </div>
       </div>
-      <span class="col-auto"><i class="fa fa-plus-square"></i> Artikel verfasse</span>
+      <span class="col-auto clickable"><i class="fa fa-plus-square"></i> Artikel verfasse</span>
     </div>
 
     <div *ngFor="let article of articles">
-      
+      <app-article-summary [article]="article"></app-article-summary>
     </div>
   </article>
 
