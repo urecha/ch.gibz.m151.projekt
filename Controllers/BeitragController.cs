@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 namespace ch.gibz.m151.projekt.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     public class BeitragController : ControllerBase
     {
         private readonly ILogger<BeitragController> _logger;
@@ -26,6 +25,7 @@ namespace ch.gibz.m151.projekt.Controllers
         }
 
         [HttpGet]
+        [Route("Beitrag/id")]
         public Beitrag Get(int id)
         {
             var Beitrag = _context.Beitrags
@@ -35,6 +35,7 @@ namespace ch.gibz.m151.projekt.Controllers
         }
 
         [HttpGet]
+        [Route("Beitrag/hottest")]
         public IEnumerable<ArticleSummary> GetHottest(int count = 0)
         {
             var HottestArticles = _context.Beitrags
@@ -49,6 +50,7 @@ namespace ch.gibz.m151.projekt.Controllers
         }
 
         [HttpGet]
+        [Route("Beitrag/shittiest")]
         public IEnumerable<ArticleSummary> GetShittiest(int count)
         {
             var ShittiestArticles = _context.Beitrags
@@ -63,9 +65,11 @@ namespace ch.gibz.m151.projekt.Controllers
         }
 
         [HttpGet]
+        [Route("Beitrag")]
         public IEnumerable<ArticleSummary> GetSummaries(int count)
         {
             var LatestArticles = _context.Beitrags
+                .Include(b => b.Autor)
                 .OrderBy(b => b.ErstelltAm)
                 .ToList();
             var LatestSummaries = new List<ArticleSummary>();

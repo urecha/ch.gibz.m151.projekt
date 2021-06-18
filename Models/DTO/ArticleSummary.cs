@@ -14,7 +14,7 @@ namespace ch.gibz.m151.projekt.Models
             Id = beitrag.Id;
             Autor = new UserSummary(beitrag.Autor);
             Titel = beitrag.Titel;
-            InhaltPreview = beitrag.Inhalt.Substring(0, 200);
+            InhaltPreview = CreatePreview(beitrag.Inhalt);
             Datum = beitrag.ErstelltAm;
         }
 
@@ -24,5 +24,12 @@ namespace ch.gibz.m151.projekt.Models
         public string InhaltPreview { get; set; }
         public DateTime Datum { get; set; }
         public virtual ICollection<BeitragLike> BeitragLikes { get; set; }
+
+        private string CreatePreview(string content)
+        {
+            int length = content.Length;
+            length = length > 200 ? 200 : length;
+            return content.Substring(0, length);
+        }
     }
 }

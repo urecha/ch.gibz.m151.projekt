@@ -10,7 +10,7 @@ namespace ch.gibz.m151.projekt.Models.DTO
         public UserSummary(ApplicationUser user)
         {
             Id = user.Id;
-            Name = user.Name;
+            Name = user.UserName;
         }
 
         public string Id { get; set; }
