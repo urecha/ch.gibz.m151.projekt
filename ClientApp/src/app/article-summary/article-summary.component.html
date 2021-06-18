@@ -2,7 +2,7 @@
   <header class="row">
 
     <div class="col-8">
-      Verzapft vom {{article.autor}} am {{article.datum}}
+      Verzapft vom {{article.autor.name}} am {{article.datum | date:'DD. MMM YYYY'}}
     </div>
     <div class="col-auto">
       <span><i class="fa fa-thumbs-up"></i> {{article.beitragLikes}} findeds laess</span>
@@ -12,7 +12,7 @@
   </header>
   <div class="row">
     <div class="col">
-      <h5>{{article.titel}}<small>{{article.autor}}</small></h5>
+      <h5>{{article.titel}}</h5>
       <p>{{article.inhaltPreview}}</p>
     </div>
     <div *ngIf="bilder && bilder.length" class="col-4">
