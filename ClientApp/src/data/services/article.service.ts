@@ -77,5 +77,14 @@ export class ArticleService {
 
     return this.httpClient.get<void>(requestUrl);
   }
+
+  /**
+   * Dislikes or un-dislikes an article, depending on whether it was unliked or not before
+   */
+  dislikeArticle(id: number): Observable<void>{
+    const requestUrl = `${this.baseRoute}/${id}/dislike`;
+
+    return this.httpClient.get<void>(requestUrl);
+  }
   
 }
