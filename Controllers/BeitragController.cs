@@ -79,5 +79,36 @@ namespace ch.gibz.m151.projekt.Controllers
             }
             return LatestSummaries;
         }
+
+        [HttpPost]
+        [Route("Beitrag")]
+        public Beitrag CreateOrUpdate(Beitrag beitrag)
+        {
+            var dbBeitrag = _context.Beitrags
+                .Where(b => b.Id == beitrag.Id)
+                .FirstOrDefault();
+            if (dbBeitrag != null)
+            {
+                dbBeitrag.Inhalt = beitrag.Inhalt;
+                dbBeitrag.Titel = beitrag.Titel;
+            }
+            else
+            {
+                dbBeitrag = beitrag;
+                _context.Beitrags
+                    .Add(dbBeitrag);
+            }
+            _context.SaveChanges();
+            return dbBeitrag;
+        }
+
+        [HttpPost]
+        [Route("Beitrag/{id}")]
+        public void DeleteArticle(int id)
+        {
+            var toRemove = _context.Beitrags
+                .Where(b => b.Id == id);
+            _context.Remove(toRemove);
+        }
     }
 }
