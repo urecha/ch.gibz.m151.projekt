@@ -36,4 +36,13 @@ export class CommentService {
 
     return this.httpClient.delete<void>(requestUrl);
   }
+
+  /**
+   * Likes or unlikes a comment, depending on whether it was liked or not before
+   */
+  likeComment(id: number): Observable<void>{
+    const requestUrl = `${this.baseRoute}/${id}/like`;
+
+    return this.httpClient.get<void>(requestUrl);
+  }
 }
