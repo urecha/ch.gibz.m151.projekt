@@ -48,4 +48,13 @@ export class ArticleComponent implements OnInit {
       }
     })
   }
+
+  async saveArticle(){
+    try{
+      this.article = await this.articleService.createOrUpdate(this.article).toPromise();
+      this.editMode = false;
+    } catch(error){
+      console.log(error);
+    }
+  }
 }

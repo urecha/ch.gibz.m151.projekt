@@ -1,54 +1,50 @@
-<div class="row article-container">
-    <div class="col-8">
-
-        <div *ngIf="!editMode else edit" class="article">
-            <div>
-                Verzapft vom {{article.autor.name}} am <span class="text-muted">{{article.datum | date:'d. MMM yy'}}</span>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-8">
-                    <p>
-                        {{article.inhalt}}
-                    </p>
-                </div>
-                <div class="col-4">
-                    <!-- images -->
-                </div>
-            </div>
-        </div>
-
-        <ng-template #edit>
-            <div class="article">
+<div class="row">
+    <div class="col-8 row article">
+        <div class="w-100">
+            <div *ngIf="!editMode else edit" class="article">
                 <div>
                     Verzapft vom {{article.autor.name}} am <span class="text-muted">{{article.datum | date:'d. MMM yy'}}</span>
                 </div>
                 <hr>
                 <div class="row">
-                    <div class="col-8">
-                        <div class="form-group">
-                            <label for="titel">Dr titu: </label>
-                            <input id="titel" class="form-control" [(ngModel)]="article.titel">
-                        </div>
-                        <label for="inhalt">Din chabis</label>
-                        <textarea id="inhalt" class="form-control">
-                            {{article.inhalt}}
-                        </textarea>
-                    </div>
+                    <p>
+                        {{article.inhalt}}
+                    </p>
                 </div>
             </div>
-        </ng-template>
 
-        <footer>
-            <!-- the like thing -->
-        </footer>
+            <ng-template #edit>
+                <div class="article">
+                    <div>
+                        Verzapft vom {{article.autor.name}} am <span class="text-muted">{{article.datum | date:'d. MMM yy'}}</span>
+                    </div>
+                    <hr>
+                    <div class="row mb-3">
+                        <div class="col-8">
+                            <div class="form-group">
+                                <label for="titel">Dr titu: </label>
+                                <input id="titel" class="form-control" [(ngModel)]="article.titel">
+                            </div>
+                            <label for="inhalt">Din chabis</label>
+                            <textarea id="inhalt" class="form-control">
+                                {{article.inhalt}}
+                            </textarea>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-outline-primary" (click)="saveArticle()"><i class="fa fa-save mr-1"></i>Isch guet</button>
+                </div>
+            </ng-template>
+
+            <footer>
+                <!-- the like thing -->
+            </footer>
+        </div>
     </div>
-    <!-- comments -->
-    <div class="col-4">
+    <aside class="col-4">
         <!-- button to add comment -->
         <ng-container *ngFor="let comment of article.kommentare">
-            <!-- kommentar -->
+            <<!-- kommentar -->>
         </ng-container>
-    </div>
+    </aside>    
 </div>
-<!-- here or somewhere else, modal to write comments in -->
