@@ -28,6 +28,23 @@
   </article>
 
   <aside class="col-4 p-2 classments">
+    <div class="buenzli-helper-bar">
+      <label class="text-muted text-small mr-2">Sortiere nach</label>
+        <div class="abegumper">
+          <span><i class="fa mr-1" [ngClass]="getIconClassForBuenzliSortingMethod(currentBuenzliSortingMethod)"></i>{{currentBuenzliSortingMethod}}</span>
+          <div class="abegumper-content">
+            <div class="abegumper-item" (click)="selectBuenzliSortingMethod(BuenzliSortingMethod.OVERALL)">
+              <a><i class="fa fa-trophy"></i> Allgemein</a>
+            </div>
+            <div class="abegumper-item" (click)="selectBuenzliSortingMethod(BuenzliSortingMethod.ARTICLES)">
+              <a><i class="fa fa-newspaper"></i> Nome artikel</a>
+            </div>
+            <div class="abegumper-item" (click)="selectBuenzliSortingMethod(BuenzliSortingMethod.COMMENTS)">
+              <a><i class="fa fa-comment-dots"></i> Nome kommentaer</a>
+            </div>
+          </div>
+        </div>
+    </div>
     <div class="classment">
     <h5><i class="fa fa-fire mr-1"></i>Top buenzlis</h5>
       <ng-container *ngFor="let buenzli of buenzlis">

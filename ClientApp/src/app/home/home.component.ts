@@ -13,6 +13,7 @@ import { ArticleService } from '../../data/services/article.service';
 })
 export class HomeComponent implements OnInit {
   public SortingMethod = SortingMethod;
+  public BuenzliSortingMethod = BuenzliSortingMethod;
 
   public articles: ArticleSummary[];
   public buenzlis: User[];
@@ -109,6 +110,15 @@ export class HomeComponent implements OnInit {
       case SortingMethod.SHITTIEST: return 'fa-poo';
       case SortingMethod.LATEST:
       default: return 'fa-sun';
+    }
+  }
+
+  public getIconClassForBuenzliSortingMethod(method: BuenzliSortingMethod) {
+    switch (method) {
+      case BuenzliSortingMethod.OVERALL: return 'fa-trophy';
+      case BuenzliSortingMethod.ARTICLES: return 'fa-newspaper';
+      case BuenzliSortingMethod.COMMENTS:
+      default: return 'fa-comment-dots';
     }
   }
 }

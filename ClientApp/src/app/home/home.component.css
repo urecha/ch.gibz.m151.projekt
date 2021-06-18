@@ -2,8 +2,11 @@
     cursor: pointer;
 }
 .helper-bar{
-    background-color: ghostwhite;
-    box-shadow: 2px 3px 2px #eee;
+    background-color: #eee;
+    box-shadow: 2px 3px 2px lightgray;
+}
+.buenzli-helper-bar{
+    
 }
 .abegumper {
     position: relative;
