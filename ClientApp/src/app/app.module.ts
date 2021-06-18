@@ -34,7 +34,7 @@ import { UserComponent } from './user/user.component';
     ApiAuthorizationModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'article', component: ArticleComponent, canActivate: [AuthorizeGuard] },
+      { path: 'article/:id', component: ArticleComponent },
     ])
   ],
   providers: [
