@@ -68,5 +68,14 @@ export class ArticleService {
 
     return this.httpClient.delete<void>(requestUrl);
   }
+
+  /**
+   * Likes or unlikes an article, depending on whether it was liked or not before
+   */
+   likeArticle(id: number): Observable<void>{
+    const requestUrl = `${this.baseRoute}/${id}/like`;
+
+    return this.httpClient.get<void>(requestUrl);
+  }
   
 }
