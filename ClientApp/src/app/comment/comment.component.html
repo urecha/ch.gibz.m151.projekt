@@ -1,7 +1,5 @@
 <div class="comment">
-    <header>
-        <h6>{{comment.autor.name}}<small>{{comment.datum}}</small></h6>
-    </header>
+    <h6>{{comment.autor.name}}<small> {{comment.datum | date:'d. MMM yy'}}</small></h6>
     <p>
         {{comment.inhalt}}
     </p>
