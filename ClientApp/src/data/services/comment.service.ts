@@ -18,4 +18,22 @@ export class CommentService {
 
     return this.httpClient.get<Comment[]>(requestUrl);
   }
+
+  /**
+   * Creates or updates a comment
+   */
+  createOrUpdate(comment: Comment): Observable<Comment>{
+    const requestUrl = `${this.baseRoute}`;
+
+    return this.httpClient.post<Comment>(requestUrl, comment);
+  }
+
+  /**
+   * Deletes the comment with given id
+   */
+  deleteComment(id: string): Observable<void>{
+    const requestUrl = `${this.baseRoute}`;
+
+    return this.httpClient.delete<void>(requestUrl);
+  }
 }

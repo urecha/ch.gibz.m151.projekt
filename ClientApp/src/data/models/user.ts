@@ -10,10 +10,18 @@ export class User implements IUser{
     beitragLikes: ArticleLike[];
 
     commentLikes: CommentLike[];
+
+    buenzliRanking: number;
+
+    halbschuehRanking: number;
 }
 
 export class UserSummary implements IUser{
     id: string;
 
     name: string;
+
+    buenzliRanking: number;
+
+    halbschuehRanking: number;
 }

@@ -48,5 +48,25 @@ export class ArticleService {
 
     return this.httpClient.get<Article>(requestUrl);
   }
+
+  /**
+   * Creates or updates an article.
+   * @param article Article to create
+   * @returns Created article (with id)
+   */
+  createOrUpdate(article: Article): Observable<Article>{
+    const requestUrl = `${this.baseRoute}`;
+
+    return this.httpClient.post<Article>(requestUrl, article);
+  }
+
+  /**
+   * Deletes the article with given id along with all its comments and likes and their likes.
+   */
+  deleteArticle(id: number): Observable<void>{
+    const requestUrl = `${this.baseRoute}/${id}`;
+
+    return this.httpClient.delete<void>(requestUrl);
+  }
   
 }
