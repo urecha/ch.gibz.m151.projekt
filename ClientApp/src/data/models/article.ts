@@ -18,6 +18,13 @@ export class Article {
 
   bilder: string[];
 
+  get likes(): number{
+    return this.beitragLikes.filter(bl => !bl.istDislike).length;
+  }
+
+  get dislikes(): number{
+    return this.beitragLikes.filter(bl => bl.istDislike).length;
+  }
 }
 
 export class ArticleSummary{
