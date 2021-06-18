@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthorizeService } from 'src/api-authorization/authorize.service';
 import { UserSummary } from 'src/data/models/user';
 import { ArticleService } from 'src/data/services/article.service';
@@ -17,9 +17,12 @@ export class ArticleComponent implements OnInit {
 
   editMode: boolean = false;
 
+  liked: boolean;
+
   constructor(
     private readonly articleService: ArticleService,
     private readonly route: ActivatedRoute,
+    private readonly router: Router,
     private readonly authorizeService: AuthorizeService,
   ) { }
 
@@ -31,7 +34,6 @@ export class ArticleComponent implements OnInit {
           this.article.datum = new Date(Date.now());
           this.article.autor = new UserSummary();
           await this.authorizeService.getUser().subscribe(user => {
-            console.log(user);
             this.article.autor.name = user.name;
           });
           this.editMode = true;
@@ -39,6 +41,9 @@ export class ArticleComponent implements OnInit {
           try {
             this.loading = true;
             this.article = await this.articleService.get(params.id).toPromise();
+            this.authorizeService.getUser().toPromise().then(user => {
+              this.liked = this.article.autor.name === user.name;
+            })
           } catch (error) {
             console.log(error);
           } finally {
@@ -53,8 +58,13 @@ export class ArticleComponent implements OnInit {
     try{
       this.article = await this.articleService.createOrUpdate(this.article).toPromise();
       this.editMode = false;
+      this.router.navigate(['/article/' + this.article.id]);
     } catch(error){
       console.log(error);
     }
+  }
+
+  likeArticle(){
+    this.articleService.likeArticle(this.article.id).subscribe(() => this.liked = !this.liked);
   }
 }

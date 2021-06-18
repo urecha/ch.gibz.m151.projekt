@@ -36,15 +36,20 @@
                 </div>
             </ng-template>
 
-            <footer>
-                <!-- the like thing -->
+            <footer class="row">
+                <div class="col"></div>
+                <div class="col-auto">
+                    <span title="findeds laess"><i class="fa fa-thumbs-up mr-1" [style.color]=""></i> {{article.likes}}</span>
+                    <span title="findeds chabis"><i class="fa fa-poo mr-1" [style.color]=""></i> {{article.dislikes}}</span>
+                    <span title="Din senf dezuegeh"><i class="fa fa-plus-circle mr-1"></i></span>
+                  </div>
             </footer>
         </div>
     </div>
     <aside class="col-4">
         <!-- button to add comment -->
         <ng-container *ngFor="let comment of article.kommentare">
-            <<!-- kommentar -->>
+            <app-comment [comment]="comment"></app-comment>
         </ng-container>
     </aside>    
 </div>
