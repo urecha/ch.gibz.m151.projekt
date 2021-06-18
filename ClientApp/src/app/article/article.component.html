@@ -1,19 +1,44 @@
 <div class="row article-container">
     <div class="col-8">
-        <!-- user summary -->
 
-        <!--article -->
-        <div class="article row">
-            <div class="col-8">
-                <h4>{{article.titel}}<small class="text-muted">{{article.datum | date:'DD/MMM/YYYY'}</small></h4>
-                <p>
-                    {{article.inhalt}}
-                </p>
+        <div *ngIf="!editMode else edit" class="article">
+            <div>
+                Verzapft vom {{article.autor.name}} am <span class="text-muted">{{article.datum | date:'d. MMM yy'}}</span>
             </div>
-            <div class="col-4">
-                <!-- images -->
+            <hr>
+            <div class="row">
+                <div class="col-8">
+                    <p>
+                        {{article.inhalt}}
+                    </p>
+                </div>
+                <div class="col-4">
+                    <!-- images -->
+                </div>
             </div>
         </div>
+
+        <ng-template #edit>
+            <div class="article">
+                <div>
+                    Verzapft vom {{article.autor.name}} am <span class="text-muted">{{article.datum | date:'d. MMM yy'}}</span>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-8">
+                        <div class="form-group">
+                            <label for="titel">Dr titu: </label>
+                            <input id="titel" class="form-control" [(ngModel)]="article.titel">
+                        </div>
+                        <label for="inhalt">Din chabis</label>
+                        <textarea id="inhalt" class="form-control">
+                            {{article.inhalt}}
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
         <footer>
             <!-- the like thing -->
         </footer>

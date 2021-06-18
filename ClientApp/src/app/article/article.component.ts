@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AuthorizeService } from 'src/api-authorization/authorize.service';
+import { UserSummary } from 'src/data/models/user';
 import { ArticleService } from 'src/data/services/article.service';
 import { Article } from '../../data/models/article';
 
@@ -13,16 +15,23 @@ export class ArticleComponent implements OnInit {
 
   loading: boolean = true;
 
+  editMode: boolean = false;
+
   constructor(
     private readonly articleService: ArticleService,
     private readonly route: ActivatedRoute,
+    private readonly authorizeService: AuthorizeService,
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.route.params.subscribe(async (params) => {
       if (params.id) {
         if (params.id == 'new') {
           this.article = new Article();
+          this.article.datum = new Date(Date.now());
+          this.article.autor = new UserSummary();
+          this.article.autor.name = await (await this.authorizeService.getUser().toPromise()).name;
+          this.editMode = true;
         } else {
           try {
             this.loading = true;
@@ -36,5 +45,4 @@ export class ArticleComponent implements OnInit {
       }
     })
   }
-
 }

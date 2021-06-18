@@ -1,3 +1,6 @@
 .article-container{
     background-color: #eee;
 }
+.article{
+    padding: 15px;
+}
