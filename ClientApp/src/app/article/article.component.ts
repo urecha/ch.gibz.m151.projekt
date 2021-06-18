@@ -30,7 +30,10 @@ export class ArticleComponent implements OnInit {
           this.article = new Article();
           this.article.datum = new Date(Date.now());
           this.article.autor = new UserSummary();
-          this.article.autor.name = await (await this.authorizeService.getUser().toPromise()).name;
+          await this.authorizeService.getUser().subscribe(user => {
+            console.log(user);
+            this.article.autor.name = user.name;
+          });
           this.editMode = true;
         } else {
           try {
