@@ -2,9 +2,11 @@
 using ch.gibz.m151.projekt.Models;
 using ch.gibz.m151.projekt.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.Security.Claims;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,10 +23,13 @@ namespace ch.gibz.m151.projekt.Controllers
 
         private ApplicationDbContext _context;
 
-        public BeitragController(ILogger<BeitragController> logger, ApplicationDbContext context)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public BeitragController(ILogger<BeitragController> logger, ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpGet]
@@ -79,9 +84,12 @@ namespace ch.gibz.m151.projekt.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateOrUpdate([FromBody] string articleJson)
+        [Authorize]
+        public IActionResult CreateOrUpdate([FromBody] Article incomingArticle)
         {
-            Article article = JsonSerializer.Deserialize<Article>(articleJson);
+            ApplicationUser currentUser = GetApplicationUser();
+            Article article = incomingArticle;
+            article.Autor = new UserSummary(currentUser);
             var dbBeitrag = _context.Beitrags
                 .Where(b => b.Id == article.Id)
                 .FirstOrDefault();
@@ -94,7 +102,7 @@ namespace ch.gibz.m151.projekt.Controllers
             }
             else
             {
-                dbBeitrag = new Beitrag(article);
+                dbBeitrag = new Beitrag(article, currentUser);
                 _context.Beitrags
                     .Add(dbBeitrag);
                 _context.SaveChanges();
@@ -112,6 +120,12 @@ namespace ch.gibz.m151.projekt.Controllers
 
             _context.SaveChanges();
             return Ok();
+        }
+
+        private ApplicationUser GetApplicationUser()
+        {
+            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _context.Users.Where(u => u.Id == userId).FirstOrDefault();
         }
     }
 }
