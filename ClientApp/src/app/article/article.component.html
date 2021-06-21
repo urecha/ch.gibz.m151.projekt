@@ -1,13 +1,10 @@
-<div class="row">
-    <div class="col-8 row article">
+<div class="row" *ngIf="article else loading">
+    <div class="col row article p-2">
         <div class="w-100">
             <div *ngIf="!editMode else edit" class="article">
                 <div>
-                    Verzapft vom {{article.autor.name}} am <span class="text-muted">{{article.datum | date:'d. MMM yy'}}</span>
-                </div>
-                <hr>
-                <div class="row">
-                    <p>
+                    <h3>{{article.titel}}</h3>
+                    <p class="article-content pt-4">
                         {{article.inhalt}}
                     </p>
                 </div>
@@ -16,7 +13,11 @@
             <ng-template #edit>
                 <div class="article">
                     <div>
-                        Verzapft vom {{article.autor.name}} am <span class="text-muted">{{article.datum | date:'d. MMM yy'}}</span>
+                        Neue biitrag erstelle
+                        <p class="text-muted avis">
+                            Dànk dra, mir lehned jeglichi haftig ab im fall das cybergmobbt wirsch oder suesch irgendwas. Poschte uf eigeni gfahr!<br>
+                            Soziali Medie hend en potenzielli Suchtgfahr und choend dis laebe starch beiflusse, also obacht!
+                        </p>
                     </div>
                     <hr>
                     <div class="row mb-3">
@@ -36,20 +37,32 @@
                 </div>
             </ng-template>
 
-            <footer class="row">
-                <div class="col"></div>
+            <footer *ngIf="!editMode" class="row">
+                <div class="col corrected">
+                    Verzapft vom <span class="text-muted">{{article.autor.name}}</span> am <span class="text-muted">{{article.datum | date:'d. MMM yy'}}</span>
+                </div>
                 <div class="col-auto">
-                    <span title="findeds laess"><i class="fa fa-thumbs-up mr-1" [style.color]=""></i> {{article.likes}}</span>
-                    <span title="findeds chabis"><i class="fa fa-poo mr-1" [style.color]=""></i> {{article.dislikes}}</span>
-                    <span title="Din senf dezuegeh"><i class="fa fa-plus-circle mr-1"></i></span>
+                    <a class="clickable" title="findi laess" [style.color]="liked ? '#0066cc' : 'black'"><i class="fa fa-thumbs-up mr-1" [style.color]=""></i> {{article.likes}}</a>
+                    <a class="clickable" title="findi chabis" [style.color]="liked ? 'brown' : 'black'"><i class="fa fa-poo mr-1" [style.color]=""></i> {{article.dislikes}}</a>
+                    <a class="clickable" title="Din senf dezuegeh"><i class="fa fa-plus-circle mr-1"></i></a>
                   </div>
             </footer>
         </div>
     </div>
-    <aside class="col-4">
-        <!-- button to add comment -->
+    <aside *ngIf="article.kommentare" class="col-4 comments my-4">
+        <button class="btn btn-block btn-outline-secondary my-2">
+            <i class="fa fa-plus-circle"></i>
+             Din senf dezuegeh
+        </button>
         <ng-container *ngFor="let comment of article.kommentare">
             <app-comment [comment]="comment"></app-comment>
         </ng-container>
     </aside>    
 </div>
+
+<ng-template #loading>
+    <div>
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+</ng-template>
+

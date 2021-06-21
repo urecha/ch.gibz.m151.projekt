@@ -18,6 +18,7 @@ export class ArticleComponent implements OnInit {
   editMode: boolean = false;
 
   liked: boolean;
+  disliked: boolean;
 
   constructor(
     private readonly articleService: ArticleService,
@@ -33,6 +34,7 @@ export class ArticleComponent implements OnInit {
           this.article = new Article();
           this.article.datum = new Date(Date.now());
           this.article.autor = new UserSummary();
+          
           await this.authorizeService.getUser().subscribe(user => {
             this.article.autor.name = user.name;
           });
@@ -41,8 +43,10 @@ export class ArticleComponent implements OnInit {
           try {
             this.loading = true;
             this.article = await this.articleService.get(params.id).toPromise();
+
             this.authorizeService.getUser().toPromise().then(user => {
-              this.liked = this.article.autor.name === user.name;
+              this.liked = this.article.beitragLikes.find(bl => !bl.istDislike && bl.user.name == user.name) ? true : false;
+              this.disliked = this.article.beitragLikes.find(bl => bl.istDislike && bl.user.name == user.name) ? true : false;
             })
           } catch (error) {
             console.log(error);
@@ -55,6 +59,9 @@ export class ArticleComponent implements OnInit {
   }
 
   async saveArticle(){
+    if(!confirm("Besch secher? D'warnig und so hesch glese und bisch der bewusst was fuer Folge das ganze chan ha?")){
+      return;
+    }
     try{
       this.article = await this.articleService.createOrUpdate(this.article).toPromise();
       this.editMode = false;
@@ -65,6 +72,22 @@ export class ArticleComponent implements OnInit {
   }
 
   likeArticle(){
-    this.articleService.likeArticle(this.article.id).subscribe(() => this.liked = !this.liked);
+    this.authorizeService.isAuthenticated().subscribe(authenticated => {
+      if(!authenticated){
+        console.log('Unauthorized!');
+        return;
+      }
+      this.articleService.likeArticle(this.article.id).subscribe(() => this.liked = !this.liked);
+    })
+  }
+
+  dislikeArticle(){
+    this.authorizeService.isAuthenticated().subscribe(authenticated => {
+      if(!authenticated){
+        console.log('Unauthorized!');
+        return;
+      }
+      this.articleService.dislikeArticle(this.article.id).subscribe(() => this.disliked = !this.disliked);
+    })
   }
 }
