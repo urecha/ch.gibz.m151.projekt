@@ -1,13 +1,13 @@
 <!-- get the svg initial generator from labratter in here pls -->
 <div class="user-summary row">
-    <div class="col-3" [innerHtml]="picture"></div>
-    <div class="col">
+    <div class="col-3 align-self-center" [innerHtml]="picture"></div>
+    <div class="col align-self-center">
         {{user.name}}
     </div>
-    <div class="col-auto" *ngIf="user.buenzliRanking <= user.halbschuehRanking">
+    <div class="col-auto align-self-center" *ngIf="user.buenzliRanking <= user.halbschuehRanking">
         <span title="Buenzli-Rang"><i class="fa fa-award mr-1"></i>{{user.buenzliRanking}}</span>
     </div>
-    <div class="col-auto" *ngIf="user.buenzliRanking > user.halbschuehRanking">
+    <div class="col-auto align-self-center" *ngIf="user.buenzliRanking > user.halbschuehRanking">
         <span title="Halbschueh-Rang"><i class="fa fa-poo mr-1"></i>{{user.halbschuehRanking}}</span>
     </div>
 </div>
