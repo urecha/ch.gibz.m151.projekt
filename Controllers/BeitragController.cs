@@ -36,7 +36,7 @@ namespace ch.gibz.m151.projekt.Controllers
 
         [HttpGet]
         [Route("Beitrag/hottest")]
-        public IEnumerable<ArticleSummary> GetHottest(int count = 0)
+        public IEnumerable<ArticleSummary> GetHottest(int count = 10)
         {
             var HottestArticles = _context.Beitrags
                 .OrderByDescending(b => b.BeitragLikes)
@@ -49,7 +49,7 @@ namespace ch.gibz.m151.projekt.Controllers
 
         [HttpGet]
         [Route("Beitrag/shittiest")]
-        public IEnumerable<ArticleSummary> GetShittiest(int count)
+        public IEnumerable<ArticleSummary> GetShittiest(int count = 10)
         {
             var ShittiestArticles = _context.Beitrags
                 .OrderBy(b => b.BeitragLikes)
