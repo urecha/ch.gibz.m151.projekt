@@ -18,8 +18,8 @@ namespace ch.gibz.m151.projekt.Models
         public DateTime ErstelltAm { get; set; }
         public string Inhalt { get; set; }
 
-        public virtual ApplicationUser Autor { get; set; }
-        public virtual ICollection<BeitragLike> BeitragLikes { get; set; }
-        public virtual ICollection<Kommentar> Kommentars { get; set; }
+        public ApplicationUser Autor { get; set; }
+        public ICollection<BeitragLike> BeitragLikes { get; set; }
+        public ICollection<Kommentar> Kommentars { get; set; }
     }
 }

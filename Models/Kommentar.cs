@@ -17,8 +17,8 @@ namespace ch.gibz.m151.projekt.Models
         public string Inhalt { get; set; }
         public DateTime Datum { get; set; }
 
-        public virtual ApplicationUser Autor { get; set; }
-        public virtual Beitrag Beitrag { get; set; }
-        public virtual ICollection<KommentarLike> KommentarLikes { get; set; }
+        public ApplicationUser Autor { get; set; }
+        public Beitrag Beitrag { get; set; }
+        public ICollection<KommentarLike> KommentarLikes { get; set; }
     }
 }
