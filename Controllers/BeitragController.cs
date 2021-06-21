@@ -41,12 +41,10 @@ namespace ch.gibz.m151.projekt.Controllers
             var HottestArticles = _context.Beitrags
                 .OrderByDescending(b => b.BeitragLikes)
                 .ToList();
-            var HottestSummaries = new List<ArticleSummary>();
-            for (int i = count; i < count + 10; i++)
-            {
-                HottestSummaries.Add(new ArticleSummary(HottestArticles[i]));
-            }
-            return HottestSummaries;
+
+            count = count >= HottestArticles.Count() ? HottestArticles.Count() - 1 : count;
+
+            return HottestArticles.Take(count).Select(a => new ArticleSummary(a));
         }
 
         [HttpGet]
@@ -56,28 +54,24 @@ namespace ch.gibz.m151.projekt.Controllers
             var ShittiestArticles = _context.Beitrags
                 .OrderBy(b => b.BeitragLikes)
                 .ToList();
-            var ShittiestSummaries = new List<ArticleSummary>();
-            for (int i = count; i < count + 10; i++)
-            {
-                ShittiestSummaries.Add(new ArticleSummary(ShittiestArticles[i]));
-            }
-            return ShittiestSummaries;
+
+            count = count >= ShittiestArticles.Count() ? ShittiestArticles.Count() - 1 : count;
+
+            return ShittiestArticles.Take(count).Select(a => new ArticleSummary(a));
         }
 
         [HttpGet]
         [Route("Beitrag")]
-        public IEnumerable<ArticleSummary> GetSummaries(int count)
+        public IEnumerable<ArticleSummary> GetSummaries(int count = 10)
         {
             var LatestArticles = _context.Beitrags
                 .Include(b => b.Autor)
                 .OrderBy(b => b.ErstelltAm)
                 .ToList();
-            var LatestSummaries = new List<ArticleSummary>();
-            for (int i = count; i < count + 10; i++)
-            {
-                LatestSummaries.Add(new ArticleSummary(LatestArticles[i]));
-            }
-            return LatestSummaries;
+
+            count = count >= LatestArticles.Count() ? LatestArticles.Count() - 1 : count;
+
+            return LatestArticles.Take(count).Select(a => new ArticleSummary(a));
         }
 
         [HttpPost]
