@@ -10,7 +10,11 @@ namespace ch.gibz.m151.projekt.Models
     {
         public ArticleSummary(Beitrag beitrag)
         {
-            BeitragLikes = new HashSet<BeitragLike>();
+            BeitragLikes = new List<ArticleLike>();
+            foreach(BeitragLike like in beitrag.BeitragLikes)
+            {
+                BeitragLikes.Add(new ArticleLike(like));
+            }
             Id = beitrag.Id;
             Autor = new UserSummary(beitrag.Autor);
             Titel = beitrag.Titel;
@@ -23,13 +27,14 @@ namespace ch.gibz.m151.projekt.Models
         public string Titel { get; set; }
         public string InhaltPreview { get; set; }
         public DateTime Datum { get; set; }
-        public virtual ICollection<BeitragLike> BeitragLikes { get; set; }
+        public virtual ICollection<ArticleLike> BeitragLikes { get; set; }
 
         private string CreatePreview(string content)
         {
             int length = content.Length;
+            string suffix = length > 200 ? "..." : "";
             length = length > 200 ? 200 : length;
-            return content.Substring(0, length);
+            return content.Substring(0, length) + suffix;
         }
     }
 }
