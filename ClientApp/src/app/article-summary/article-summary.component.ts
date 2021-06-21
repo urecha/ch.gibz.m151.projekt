@@ -12,9 +12,8 @@ export class ArticleSummaryComponent implements OnInit {
   @Input()
   article: ArticleSummary;
 
-  username: string;
-
   liked: boolean;
+  disliked: boolean;
 
   constructor(
     private authorizeService: AuthorizeService,
@@ -23,13 +22,28 @@ export class ArticleSummaryComponent implements OnInit {
 
   ngOnInit() {
     this.authorizeService.getUser().toPromise().then(user => {
-      this.username = user.name;
-      this.liked = this.article.autor.name == this.username;
+      let username = user.name;
+      this.liked = this.article.beitragLikes.find(bl => !bl.istDislike && bl.user.name == username) ? true : false;
+      this.disliked = this.article.beitragLikes.find(bl => bl.istDislike && bl.user.name == username) ? true : false;
     })
   }
 
   likeArticle(){
-    this.articleService.likeArticle(this.article.id).subscribe(() => this.liked = !this.liked);
+    this.authorizeService.isAuthenticated().subscribe(authenticated => {
+      if(!authenticated){
+        return;
+      }
+      this.articleService.likeArticle(this.article.id).subscribe(() => this.liked = !this.liked);
+    })
+  }
+
+  dislikeArticle(){
+    this.authorizeService.isAuthenticated().subscribe(authenticated => {
+      if(!authenticated){
+        return;
+      }
+      this.articleService.dislikeArticle(this.article.id).subscribe(() => this.disliked = !this.disliked);
+    })
   }
 
 }

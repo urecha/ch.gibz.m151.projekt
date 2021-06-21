@@ -1,15 +1,18 @@
-<div>
-  <header class="row">
-    <div class="col-8">
+<div class="article-summary m-2 pl-4">
+  <header class="row text-small">
+    <div class="col text-muted">
       Verzapft vom {{article.autor.name}} am {{article.datum | date:'d. MMM yy'}}
     </div>
-    <div class="col-auto">
-      <span title="findeds laess"><i class="fa fa-thumbs-up mr-1" [style.color]=""></i> {{article.beitragLikes}}</span>
-      <span><i class="fa fa-plus-circle mr-1"></i>Din senf dezuegeh</span>
+    <div class="col-auto mr-2">
+      <a class="clickable" title="findi laess" (click)="likeArticle()" [style.color]="liked ? '#0066cc' : 'black'"><i class="fa fa-thumbs-up ml-1" [style.color]=""></i> {{article.likes}}</a>
+      <a class="clickable" title="findi chabis" (click)="dislikeArticle()" [style.color]="disliked ? 'brown' : 'black'"><i class="fa fa-poo ml-1"></i> {{article.dislikes}}</a>
+      <a class="clickable" title="Din senf dezuegeh"><i class="fa fa-plus-circle ml-1"></i></a>
     </div>
   </header>
-  <div class="row">
-    <h5>{{article.titel}}</h5>
-    <p>{{article.inhaltPreview}}</p>
-  </div>
+  <a [routerLink]="'/article/' + article.id">
+    <div>
+      <h5>{{article.titel}}</h5>
+      <p>{{article.inhaltPreview}}</p>
+    </div>
+  </a>
 </div>
