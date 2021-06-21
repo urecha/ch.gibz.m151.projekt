@@ -4,9 +4,12 @@
 .helper-bar{
     background-color: #eee;
     box-shadow: 2px 3px 2px lightgray;
+    margin: 20px 0 50px 0;
 }
 .buenzli-helper-bar{
-    
+}
+aside{
+    margin: 20px 0 50px 0;
 }
 .abegumper {
     position: relative;

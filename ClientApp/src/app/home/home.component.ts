@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
   public halbschueh: User[];
 
   public loading: boolean = true;
+  public loadingBuenzlis: boolean = true;
 
   public currentSortingMethod: SortingMethod;
   public currentBuenzliSortingMethod: BuenzliSortingMethod;
@@ -40,34 +41,38 @@ export class HomeComponent implements OnInit {
   }
 
   public async selectBuenzliSortingMethod(method: BuenzliSortingMethod) {
+    this.loadingBuenzlis = true;
     this.currentBuenzliSortingMethod = method;
     switch (this.currentBuenzliSortingMethod) {
       case BuenzliSortingMethod.ARTICLES: {
         this.buenzlis = await this.userService.getTopBuenzlisForArticles().toPromise();
         this.halbschueh = await this.userService.getTopHalbschuehForArticles().toPromise();
+        this.loadingBuenzlis = false;
         break;
       }
       case BuenzliSortingMethod.COMMENTS: {
         this.buenzlis = await this.userService.getTopBuenzlisForComments().toPromise();
         this.halbschueh = await this.userService.getTopHalbschuehForComments().toPromise();
+        this.loadingBuenzlis = false;
         break;
       }
       case BuenzliSortingMethod.OVERALL: 
       default: {
         this.buenzlis = await this.userService.getTopBuenzlis().toPromise();
         this.halbschueh = await this.userService.getTopHalbschueh().toPromise();
+        this.loadingBuenzlis = false;
         break;
       }
     }
   }
 
-  public selectSortingMethod(method: SortingMethod) {
+  public async selectSortingMethod(method: SortingMethod) {
     this.currentSortingMethod = method;
     switch (this.currentSortingMethod) {
-      case SortingMethod.HOTTEST: this.getHottest(); break;
-      case SortingMethod.SHITTIEST: this.getShittiest(); break;
+      case SortingMethod.HOTTEST: await this.getHottest(); break;
+      case SortingMethod.SHITTIEST: await this.getShittiest(); break;
       case SortingMethod.LATEST:
-      default: this.getLatest(); break;
+      default: await this.getLatest(); break;
     }
   }
 
@@ -75,10 +80,12 @@ export class HomeComponent implements OnInit {
     try {
       this.loading = true;
       this.articles = await this.articleService.getSummaries().toPromise();
+      console.log(this.loading);
     } catch (error) {
       console.log(error);
     } finally {
       this.loading = false;
+      console.log(this.loading);
     }
   }
 
@@ -124,7 +131,7 @@ export class HomeComponent implements OnInit {
 }
 
 export enum SortingMethod {
-  LATEST = 'Neus zueg',
+  LATEST = 'Neueschtem',
   HOTTEST = 'Laessigkeit',
   SHITTIEST = 'Chabis'
 }
