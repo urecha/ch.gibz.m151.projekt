@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Article, ArticleSummary } from '../models/article';
@@ -7,7 +7,11 @@ import { Article, ArticleSummary } from '../models/article';
   providedIn: 'root'
 })
 export class ArticleService {
-  readonly baseRoute = '/Beitrag';
+  readonly baseRoute = '/api/Beitrag';
+
+  readonly httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
   constructor(
     private readonly httpClient: HttpClient,
@@ -56,8 +60,11 @@ export class ArticleService {
    */
   createOrUpdate(article: Article): Observable<Article>{
     const requestUrl = `${this.baseRoute}`;
+    console.log(article);
+    const json = JSON.stringify(article);
+    console.log(json);
 
-    return this.httpClient.post<Article>(requestUrl, article);
+    return this.httpClient.post<Article>(requestUrl, json, this.httpOptions);
   }
 
   /**
@@ -66,7 +73,7 @@ export class ArticleService {
   deleteArticle(id: number): Observable<void>{
     const requestUrl = `${this.baseRoute}/${id}`;
 
-    return this.httpClient.delete<void>(requestUrl);
+    return this.httpClient.delete<void>(requestUrl, this.httpOptions);
   }
 
   /**

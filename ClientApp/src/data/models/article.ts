@@ -16,8 +16,6 @@ export class Article {
 
   kommentare: Comment[]; 
 
-  bilder: string[];
-
   get likes(): number{
     if(!this.beitragLikes || !this.beitragLikes.length) return 0;
     return this.beitragLikes.filter(bl => !bl.istDislike).length;

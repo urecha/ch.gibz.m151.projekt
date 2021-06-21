@@ -27,8 +27,7 @@
                                 <input id="titel" class="form-control" [(ngModel)]="article.titel">
                             </div>
                             <label for="inhalt">Din chabis</label>
-                            <textarea id="inhalt" class="form-control">
-                                {{article.inhalt}}
+                            <textarea id="inhalt" [(ngModel)]="article.inhalt" class="form-control">
                             </textarea>
                         </div>
                     </div>

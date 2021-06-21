@@ -34,6 +34,7 @@ export class ArticleComponent implements OnInit {
           this.article = new Article();
           this.article.datum = new Date(Date.now());
           this.article.autor = new UserSummary();
+          this.article.beitragLikes = [];
           
           await this.authorizeService.getUser().subscribe(user => {
             this.article.autor.name = user.name;
