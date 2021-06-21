@@ -48,26 +48,33 @@ namespace ch.gibz.m151.projekt.Controllers
         [Route("hottest")]
         public IActionResult GetHottest(int count = 10)
         {
-            var HottestArticles = _context.Beitrags
-                .OrderByDescending(b => b.BeitragLikes)
+            var allArticles = _context.Beitrags
+                .Include(b => b.BeitragLikes)
+                .ThenInclude(bl => bl.User)
+                .Include(b => b.Autor)
                 .ToList();
 
-            count = count >= HottestArticles.Count() ? HottestArticles.Count() - 1 : count;
+            var hottestArticles = allArticles.OrderByDescending(b => b.GetTotalLikes());
 
-            return Ok(HottestArticles.Take(count).Select(a => new ArticleSummary(a)));
+            count = count >= hottestArticles.Count() ? hottestArticles.Count() - 1 : count;
+
+            return Ok(hottestArticles.Take(count).Select(a => new ArticleSummary(a)));
         }
 
         [HttpGet]
         [Route("shittiest")]
         public IActionResult GetShittiest(int count = 10)
         {
-            var ShittiestArticles = _context.Beitrags
-                .OrderBy(b => b.BeitragLikes)
+            var allArticles = _context.Beitrags
+                .Include(b => b.BeitragLikes)
+                .ThenInclude(bl => bl.User)
+                .Include(b => b.Autor)
                 .ToList();
 
-            count = count >= ShittiestArticles.Count() ? ShittiestArticles.Count() - 1 : count;
+            var shittiestArticles = allArticles.OrderBy(b => b.GetTotalLikes());
+            count = count >= shittiestArticles.Count() ? shittiestArticles.Count() - 1 : count;
 
-            return Ok(ShittiestArticles.Take(count).Select(a => new ArticleSummary(a)));
+            return Ok(shittiestArticles.Take(count).Select(a => new ArticleSummary(a)));
         }
 
         [HttpGet]
@@ -75,7 +82,7 @@ namespace ch.gibz.m151.projekt.Controllers
         {
             var LatestArticles = _context.Beitrags
                 .Include(b => b.Autor)
-                .OrderBy(b => b.ErstelltAm)
+                .OrderByDescending(b => b.ErstelltAm)
                 .ToList();
 
             count = count >= LatestArticles.Count() ? LatestArticles.Count() - 1 : count;
