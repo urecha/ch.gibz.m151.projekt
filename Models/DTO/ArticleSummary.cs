@@ -31,10 +31,15 @@ namespace ch.gibz.m151.projekt.Models
 
         private string CreatePreview(string content)
         {
-            int length = content.Length;
-            string suffix = length > 200 ? "..." : "";
-            length = length > 200 ? 200 : length;
-            return content.Substring(0, length) + suffix;
+            string result = "";
+            if (content != null)
+            {
+                int length = content.Length;
+                string suffix = length > 200 ? "..." : "";
+                length = length > 200 ? 200 : length;
+                result = content.Substring(0, length) + suffix;
+            }
+            return result;
         }
     }
 }

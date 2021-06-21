@@ -26,6 +26,20 @@ namespace ch.gibz.m151.projekt.Models
             Autor.Id = article.Autor.Id;
         }
 
+        public Beitrag(Article article, ApplicationUser user)
+        {
+            BeitragLikes = new HashSet<BeitragLike>();
+            Kommentars = new HashSet<Kommentar>();
+
+            Id = article.Id;
+            Titel = article.Titel;
+            ErstelltAm = article.Datum;
+            Inhalt = article.Inhalt;
+            Autor = user;
+        }
+
+
+
         public int Id { get; set; }
         public string Titel { get; set; }
         public DateTime ErstelltAm { get; set; }

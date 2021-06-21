@@ -13,6 +13,11 @@ namespace ch.gibz.m151.projekt.Models.DTO
             Name = user.UserName;
         }
 
+        public UserSummary()
+        {
+
+        }
+
         public string Id { get; set; }
         public string Name { get; set; }
     }
