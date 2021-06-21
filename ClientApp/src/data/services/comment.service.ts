@@ -7,7 +7,7 @@ import { Comment } from '../models/comment';
   providedIn: 'root',
 })
 export class CommentService {
-  readonly baseRoute = '/Kommentar';
+  readonly baseRoute = '/kommentar';
 
   constructor(
     private readonly httpClient: HttpClient,
