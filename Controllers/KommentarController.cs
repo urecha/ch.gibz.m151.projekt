@@ -1,5 +1,6 @@
 ﻿using ch.gibz.m151.projekt.Data;
 using ch.gibz.m151.projekt.Models;
+using ch.gibz.m151.projekt.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -27,12 +28,13 @@ namespace ch.gibz.m151.projekt.Controllers
 
         [HttpGet]
         [Route("Kommentar/{id}")]
-        public Kommentar Get(int id)
+        public Comment Get(int id)
         {
             var Kommentar = _context.Kommentars
                 .Where(k => k.Id == id)
                 .FirstOrDefault();
-            return Kommentar;
+
+            return new Comment(Kommentar);
         }
 
         [HttpPost]
@@ -46,6 +48,7 @@ namespace ch.gibz.m151.projekt.Controllers
 
         [HttpPost]
         [Route("Kommentar")]
+        //TODO adjust parameter type and add method to convert
         public Kommentar CreateOrUpdate(Kommentar kommentar)
         {
             var dbKommentar = _context.Kommentars

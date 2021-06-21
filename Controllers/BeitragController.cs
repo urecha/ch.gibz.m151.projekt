@@ -1,5 +1,6 @@
 ﻿using ch.gibz.m151.projekt.Data;
 using ch.gibz.m151.projekt.Models;
+using ch.gibz.m151.projekt.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -25,13 +26,15 @@ namespace ch.gibz.m151.projekt.Controllers
         }
 
         [HttpGet]
-        [Route("Beitrag/id")]
-        public Beitrag Get(int id)
+        [Route("Beitrag/{id}")]
+        public Article Get(int id)
         {
             var Beitrag = _context.Beitrags
                 .Where(b => b.Id == id)
+                .Include(b => b.Autor)
                 .FirstOrDefault();
-            return Beitrag;
+
+            return new Article(Beitrag);
         }
 
         [HttpGet]
@@ -76,6 +79,7 @@ namespace ch.gibz.m151.projekt.Controllers
 
         [HttpPost]
         [Route("Beitrag")]
+        //TODO create a "toModel" or "toEntity" method in class "Article". Because here, you're gonna get an article, not a "Beitrag" and you'll have to convert it.
         public Beitrag CreateOrUpdate(Beitrag beitrag)
         {
             var dbBeitrag = _context.Beitrags
