@@ -3,6 +3,7 @@ using ch.gibz.m151.projekt.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -38,6 +39,7 @@ namespace ch.gibz.m151.projekt
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
+            services.AddHttpContextAccessor();
             services.AddAuthentication()
                 .AddIdentityServerJwt();
             services.AddControllersWithViews();
