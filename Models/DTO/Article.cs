@@ -15,6 +15,11 @@ namespace ch.gibz.m151.projekt.Models.DTO
         public virtual ICollection<ArticleLike> BeitragLikes { get; set; }
         public virtual ICollection<Comment> Kommentare { get; set; }
 
+        public Article()
+        {
+
+        }
+
         public Article(Beitrag beitrag)
         {
             this.Id = beitrag.Id;
@@ -23,7 +28,7 @@ namespace ch.gibz.m151.projekt.Models.DTO
             this.Datum = beitrag.ErstelltAm;
             this.Inhalt = beitrag.Inhalt;
             this.BeitragLikes = new List<ArticleLike>();
-            foreach(BeitragLike like in beitrag.BeitragLikes)
+            foreach (BeitragLike like in beitrag.BeitragLikes)
             {
                 this.BeitragLikes.Add(new ArticleLike(like));
             }

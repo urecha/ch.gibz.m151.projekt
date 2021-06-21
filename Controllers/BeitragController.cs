@@ -8,11 +8,13 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace ch.gibz.m151.projekt.Controllers
 {
     [ApiController]
+    [Route("/api/[controller]")]
     public class BeitragController : ControllerBase
     {
         private readonly ILogger<BeitragController> _logger;
@@ -26,20 +28,20 @@ namespace ch.gibz.m151.projekt.Controllers
         }
 
         [HttpGet]
-        [Route("Beitrag/{id}")]
-        public Article Get(int id)
+        [Route("{id}")]
+        public IActionResult Get([FromRoute] int id)
         {
             var Beitrag = _context.Beitrags
                 .Where(b => b.Id == id)
                 .Include(b => b.Autor)
                 .FirstOrDefault();
 
-            return new Article(Beitrag);
+            return Ok(new Article(Beitrag));
         }
 
         [HttpGet]
-        [Route("Beitrag/hottest")]
-        public IEnumerable<ArticleSummary> GetHottest(int count = 10)
+        [Route("hottest")]
+        public IActionResult GetHottest(int count = 10)
         {
             var HottestArticles = _context.Beitrags
                 .OrderByDescending(b => b.BeitragLikes)
@@ -47,12 +49,12 @@ namespace ch.gibz.m151.projekt.Controllers
 
             count = count >= HottestArticles.Count() ? HottestArticles.Count() - 1 : count;
 
-            return HottestArticles.Take(count).Select(a => new ArticleSummary(a));
+            return Ok(HottestArticles.Take(count).Select(a => new ArticleSummary(a)));
         }
 
         [HttpGet]
-        [Route("Beitrag/shittiest")]
-        public IEnumerable<ArticleSummary> GetShittiest(int count = 10)
+        [Route("shittiest")]
+        public IActionResult GetShittiest(int count = 10)
         {
             var ShittiestArticles = _context.Beitrags
                 .OrderBy(b => b.BeitragLikes)
@@ -60,12 +62,11 @@ namespace ch.gibz.m151.projekt.Controllers
 
             count = count >= ShittiestArticles.Count() ? ShittiestArticles.Count() - 1 : count;
 
-            return ShittiestArticles.Take(count).Select(a => new ArticleSummary(a));
+            return Ok(ShittiestArticles.Take(count).Select(a => new ArticleSummary(a)));
         }
 
         [HttpGet]
-        [Route("Beitrag")]
-        public IEnumerable<ArticleSummary> GetSummaries(int count = 10)
+        public IActionResult GetSummaries(int count = 10)
         {
             var LatestArticles = _context.Beitrags
                 .Include(b => b.Autor)
@@ -74,39 +75,43 @@ namespace ch.gibz.m151.projekt.Controllers
 
             count = count >= LatestArticles.Count() ? LatestArticles.Count() - 1 : count;
 
-            return LatestArticles.Take(count).Select(a => new ArticleSummary(a));
+            return Ok(LatestArticles.Take(count).Select(a => new ArticleSummary(a)));
         }
 
         [HttpPost]
-        [Route("Beitrag")]
-        //TODO create a "toModel" or "toEntity" method in class "Article". Because here, you're gonna get an article, not a "Beitrag" and you'll have to convert it.
-        public Beitrag CreateOrUpdate(Beitrag beitrag)
+        public IActionResult CreateOrUpdate([FromBody] string articleJson)
         {
+            Article article = JsonSerializer.Deserialize<Article>(articleJson);
             var dbBeitrag = _context.Beitrags
-                .Where(b => b.Id == beitrag.Id)
+                .Where(b => b.Id == article.Id)
                 .FirstOrDefault();
             if (dbBeitrag != null)
             {
-                dbBeitrag.Inhalt = beitrag.Inhalt;
-                dbBeitrag.Titel = beitrag.Titel;
+                dbBeitrag.Inhalt = article.Inhalt;
+                dbBeitrag.Titel = article.Titel;
+                _context.SaveChanges();
+                return Ok(new Article(dbBeitrag));
             }
             else
             {
-                dbBeitrag = beitrag;
+                dbBeitrag = new Beitrag(article);
                 _context.Beitrags
                     .Add(dbBeitrag);
+                _context.SaveChanges();
+                return CreatedAtAction(nameof(CreateOrUpdate), new { id = dbBeitrag.Id }, new Article(dbBeitrag));
             }
-            _context.SaveChanges();
-            return dbBeitrag;
         }
 
-        [HttpPost]
-        [Route("Beitrag/{id}")]
-        public void DeleteArticle(int id)
+        [HttpDelete]
+        [Route("{id}")]
+        public IActionResult DeleteArticle([FromRoute] int id)
         {
             var toRemove = _context.Beitrags
                 .Where(b => b.Id == id);
             _context.Remove(toRemove);
+
+            _context.SaveChanges();
+            return Ok();
         }
     }
 }

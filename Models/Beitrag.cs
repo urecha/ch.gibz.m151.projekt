@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ch.gibz.m151.projekt.Models.DTO;
+using System;
 using System.Collections.Generic;
 
 #nullable disable
@@ -11,6 +12,18 @@ namespace ch.gibz.m151.projekt.Models
         {
             BeitragLikes = new HashSet<BeitragLike>();
             Kommentars = new HashSet<Kommentar>();
+        }
+
+        public Beitrag(Article article)
+        {
+            BeitragLikes = new HashSet<BeitragLike>();
+            Kommentars = new HashSet<Kommentar>();
+
+            Id = article.Id;
+            Titel = article.Titel;
+            ErstelltAm = article.Datum;
+            Inhalt = article.Inhalt;
+            Autor.Id = article.Autor.Id;
         }
 
         public int Id { get; set; }
