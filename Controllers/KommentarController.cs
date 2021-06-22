@@ -1,4 +1,5 @@
-﻿using ch.gibz.m151.projekt.Data;
+﻿using ch.gibz.m151.projekt.Business.KommentarLogic;
+using ch.gibz.m151.projekt.Data;
 using ch.gibz.m151.projekt.Models;
 using ch.gibz.m151.projekt.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
@@ -25,23 +26,21 @@ namespace ch.gibz.m151.projekt.Controllers
 
         private readonly IHttpContextAccessor _httpContextAccessor;
 
+        private readonly KommentarService kommentarService;
+
         public KommentarController(ILogger<BeitragController> logger, ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
             _context = context;
             _httpContextAccessor = httpContextAccessor;
+            kommentarService = new KommentarService(context, httpContextAccessor);
         }
 
         [HttpGet]
         [Route("{id}")]
         public IActionResult GetForArticle([FromRoute] string id)
         {
-
-            var comments = _context.Kommentars
-                .Where(k => k.Beitrag.Id == int.Parse(id))
-                .Select(k => new Comment(k))
-                .ToList();
-
+            var comments = kommentarService.GetForArticle(id);
             return Ok(comments);
         }
 
@@ -49,12 +48,7 @@ namespace ch.gibz.m151.projekt.Controllers
         [Route("{id}")]
         public IActionResult DeleteComment([FromRoute] int id)
         {
-            var toRemove = _context.Kommentars
-                .Where(k => k.Id == id);
-            _context.Remove(toRemove);
-
-            _context.SaveChanges();
-
+            kommentarService.DeleteComment(id);
             return Ok();
         }
 
@@ -62,29 +56,8 @@ namespace ch.gibz.m151.projekt.Controllers
         [Authorize]
         public IActionResult CreateOrUpdate([FromBody] Comment incomingComment)
         {
-            ApplicationUser currentUser = GetApplicationUser();
-            Comment comment = incomingComment;
-            comment.Autor = new UserSummary(currentUser);
-            comment.Beitrag = GetBeitrag(comment.ArticleId);
-
-            var dbKommentar = _context.Kommentars
-                .Where(k => k.Id == incomingComment.Id)
-                .FirstOrDefault();
-            if (dbKommentar != null)
-            {
-                dbKommentar.Inhalt = incomingComment.Inhalt;
-                dbKommentar.Titel = incomingComment.Titel;
-                _context.SaveChanges();
-                return Ok(new Comment(dbKommentar));
-            }
-            else
-            {
-                dbKommentar = new Kommentar(comment, currentUser);
-                _context.Kommentars
-                    .Add(dbKommentar);
-                _context.SaveChanges();
-                return CreatedAtAction(nameof(CreateOrUpdate), new { id = dbKommentar.Id } ,new Comment(dbKommentar));
-            }
+            CreatedKommentar createdComment = kommentarService.CreateOrUpdate(incomingComment);
+            return CreatedAtAction(nameof(CreateOrUpdate), new { id = createdComment.KommentarId }, new Comment(createdComment.Kommentar));
         }
 
         private ApplicationUser GetApplicationUser()
@@ -95,7 +68,7 @@ namespace ch.gibz.m151.projekt.Controllers
 
         private Beitrag GetBeitrag(int id)
         {
-            return _context.Beitrags.Where(b => b.Id == id).FirstOrDefault();
+            return kommentarService.GetBeitrag(id);
         }
     }
 }
