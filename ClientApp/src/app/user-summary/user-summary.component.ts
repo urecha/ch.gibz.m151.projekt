@@ -17,6 +17,9 @@ export class UserSummaryComponent implements OnInit {
   @Input()
   user: User;
 
+  @Input()
+  isTopBuenzli: boolean = true;
+
   picture: SafeHtml;
 
   constructor(
@@ -25,6 +28,7 @@ export class UserSummaryComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if(!this.user) return;
     this.picture = this.domSanitizer.bypassSecurityTrustHtml(this.userService.getGenericProfilePicture(this.user.name));
   }
 
