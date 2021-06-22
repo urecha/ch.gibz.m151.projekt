@@ -1,4 +1,5 @@
 import { ArticleLike } from "./articleLike";
+import { Comment } from "./comment";
 import { UserSummary } from "./user";
 
 export class Article {
