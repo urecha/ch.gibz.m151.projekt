@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Comment } from '../models/comment';
@@ -7,7 +7,11 @@ import { Comment } from '../models/comment';
   providedIn: 'root',
 })
 export class CommentService {
-  readonly baseRoute = '/kommentar';
+  readonly baseRoute = '/api/Kommentar';
+
+  readonly httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
   constructor(
     private readonly httpClient: HttpClient,
@@ -25,7 +29,7 @@ export class CommentService {
   createOrUpdate(comment: Comment): Observable<Comment>{
     const requestUrl = `${this.baseRoute}`;
 
-    return this.httpClient.post<Comment>(requestUrl, comment);
+    return this.httpClient.post<Comment>(requestUrl, comment, this.httpOptions);
   }
 
   /**
@@ -34,7 +38,7 @@ export class CommentService {
   deleteComment(id: string): Observable<void>{
     const requestUrl = `${this.baseRoute}`;
 
-    return this.httpClient.delete<void>(requestUrl);
+    return this.httpClient.delete<void>(requestUrl, this.httpOptions);
   }
 
   /**
