@@ -43,12 +43,11 @@
                 <div class="col-auto">
                     <a class="clickable" title="findi laess" [style.color]="liked ? '#0066cc' : 'black'"><i class="fa fa-thumbs-up mr-1" [style.color]=""></i> {{article.likes}}</a>
                     <a class="clickable" title="findi chabis" [style.color]="liked ? 'brown' : 'black'"><i class="fa fa-poo mr-1" [style.color]=""></i> {{article.dislikes}}</a>
-                    <a class="clickable" title="Din senf dezuegeh"><i class="fa fa-plus-circle mr-1"></i></a>
                   </div>
             </footer>
         </div>
     </div>
-    <aside *ngIf="article.kommentare" class="col-4 comments my-4">
+    <aside *ngIf="!editMode" class="col-4 comments my-4">
         <button class="btn btn-block btn-outline-secondary my-2" (click)="commentMode = true;">
             <i class="fa fa-plus-circle"></i>
              Din senf dezuegeh
