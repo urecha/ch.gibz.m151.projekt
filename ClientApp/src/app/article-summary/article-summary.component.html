@@ -6,7 +6,6 @@
     <div class="col-auto mr-2">
       <a class="clickable" title="findi laess" (click)="likeArticle()" [style.color]="liked ? '#0066cc' : 'black'"><i class="fa fa-thumbs-up ml-1" [style.color]=""></i> {{article.likes}}</a>
       <a class="clickable" title="findi chabis" (click)="dislikeArticle()" [style.color]="disliked ? 'brown' : 'black'"><i class="fa fa-poo ml-1"></i> {{article.dislikes}}</a>
-      <a class="clickable" title="Din senf dezuegeh"><i class="fa fa-plus-circle ml-1"></i></a>
     </div>
   </header>
   <a [routerLink]="'/article/' + article.id">
