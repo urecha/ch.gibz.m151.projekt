@@ -39,6 +39,7 @@ namespace ch.gibz.m151.projekt.Controllers
             var Beitrag = _context.Beitrags
                 .Where(b => b.Id == id)
                 .Include(b => b.Autor)
+                .Include(b => b.Kommentars)
                 .FirstOrDefault();
 
             return Ok(new Article(Beitrag));
