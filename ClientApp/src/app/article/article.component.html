@@ -49,10 +49,26 @@
         </div>
     </div>
     <aside *ngIf="article.kommentare" class="col-4 comments my-4">
-        <button class="btn btn-block btn-outline-secondary my-2">
+        <button class="btn btn-block btn-outline-secondary my-2" (click)="commentMode = true;">
             <i class="fa fa-plus-circle"></i>
              Din senf dezuegeh
         </button>
+        <ng-container *ngIf="commentMode">
+            <div class="comment-create">
+                <div class="form-group my-2">
+                    <label>Churzfassig</label>
+                    <input class="form-control" [(ngModel)]="commentTitel">
+                </div>
+                <div class="form-group my-2">
+                    <label>Lah's use</label>
+                    <textarea class="form-control my-2" [(ngModel)]="comment"></textarea>
+                </div>
+                <button class="btn btn-outline-secondary comment-saver" (click)="saveComment()">
+                    Usehaue
+                </button>
+            </div>
+            <hr>
+        </ng-container>
         <ng-container *ngFor="let comment of article.kommentare">
             <app-comment [comment]="comment"></app-comment>
         </ng-container>
@@ -64,4 +80,3 @@
         <i class="fa fa-refresh fa-spin"></i>
     </div>
 </ng-template>
-

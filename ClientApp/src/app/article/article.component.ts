@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthorizeService } from 'src/api-authorization/authorize.service';
+import { Comment } from 'src/data/models/comment';
 import { UserSummary } from 'src/data/models/user';
 import { ArticleService } from 'src/data/services/article.service';
+import { CommentService } from 'src/data/services/comment.service';
 import { Article } from '../../data/models/article';
 
 @Component({
@@ -17,11 +19,16 @@ export class ArticleComponent implements OnInit {
 
   editMode: boolean = false;
 
+  commentMode: boolean = false;
+  comment: string;
+  commentTitel: string;
+
   liked: boolean;
   disliked: boolean;
 
   constructor(
     private readonly articleService: ArticleService,
+    private readonly commentService: CommentService,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly authorizeService: AuthorizeService,
@@ -32,10 +39,15 @@ export class ArticleComponent implements OnInit {
       if (params.id) {
         if (params.id == 'new') {
           this.article = new Article();
-          this.article.datum = new Date(Date.now());
+
+          const now = new Date(Date.now());
+          this.article.datum = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+          console.log(this.article.datum);
+
           this.article.autor = new UserSummary();
           this.article.beitragLikes = [];
-          
+          this.article.kommentare = [];
+
           await this.authorizeService.getUser().subscribe(user => {
             this.article.autor.name = user.name;
           });
@@ -59,22 +71,42 @@ export class ArticleComponent implements OnInit {
     })
   }
 
-  async saveArticle(){
-    if(!confirm("Besch secher? D'warnig und so hesch glese und bisch der bewusst was fuer Folge das ganze chan ha?")){
+  async saveArticle() {
+    if (!confirm("Besch secher? D'warnig und so hesch glese und bisch der bewusst was fuer Folge das ganze chan ha?")) {
       return;
     }
-    try{
+    try {
       this.article = await this.articleService.createOrUpdate(this.article).toPromise();
       this.editMode = false;
       this.router.navigate(['/article/' + this.article.id]);
-    } catch(error){
+    } catch (error) {
       console.log(error);
     }
   }
 
-  likeArticle(){
+  saveComment() {
+    const comment = new Comment();
+    comment.articleId = this.article.id;
+    comment.autor = new UserSummary();
+
+    const now = new Date(Date.now());
+    comment.datum = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+
+    comment.inhalt = this.comment;
+    comment.titel = this.commentTitel;
+    comment.likes = [];
+
+    this.commentService.createOrUpdate(comment).subscribe(comment => {
+      this.article.kommentare.push(comment);
+      this.commentMode = false;
+      this.comment = '';
+      this.commentTitel = '';
+    });
+  }
+
+  likeArticle() {
     this.authorizeService.isAuthenticated().subscribe(authenticated => {
-      if(!authenticated){
+      if (!authenticated) {
         console.log('Unauthorized!');
         return;
       }
@@ -82,9 +114,9 @@ export class ArticleComponent implements OnInit {
     })
   }
 
-  dislikeArticle(){
+  dislikeArticle() {
     this.authorizeService.isAuthenticated().subscribe(authenticated => {
-      if(!authenticated){
+      if (!authenticated) {
         console.log('Unauthorized!');
         return;
       }
