@@ -2,71 +2,93 @@
 using ch.gibz.m151.projekt.Models;
 using ch.gibz.m151.projekt.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ch.gibz.m151.projekt.Controllers
 {
     [Authorize]
     [ApiController]
+    [Route("/api/[controller]")]
     public class KommentarController : ControllerBase
     {
         private readonly ILogger<BeitragController> _logger;
 
         private ApplicationDbContext _context;
 
-        public KommentarController(ILogger<BeitragController> logger, ApplicationDbContext context)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public KommentarController(ILogger<BeitragController> logger, ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpGet]
-        [Route("Kommentar/{id}")]
-        public Comment Get(int id)
+        [Route("{id}")]
+        public IActionResult GetForArticle([FromRoute] int id)
         {
-            var Kommentar = _context.Kommentars
-                .Where(k => k.Id == id)
-                .FirstOrDefault();
+            var comments = _context.Kommentars
+                .Where(k => k.Beitrag.Id == id)
+                .Select(k => new Comment(k))
+                .ToList();
 
-            return new Comment(Kommentar);
+            return Ok(comments);
         }
 
-        [HttpPost]
-        [Route("Kommentar/{id}")]
-        public void DeleteComment(int id)
+        [HttpDelete]
+        [Route("{id}")]
+        public IActionResult DeleteComment([FromRoute] int id)
         {
             var toRemove = _context.Kommentars
                 .Where(k => k.Id == id);
             _context.Remove(toRemove);
+
+            _context.SaveChanges();
+
+            return Ok();
         }
 
         [HttpPost]
-        [Route("Kommentar")]
-        //TODO adjust parameter type and add method to convert
-        public Kommentar CreateOrUpdate(Kommentar kommentar)
+        [Authorize]
+        public IActionResult CreateOrUpdate([FromBody] Comment incomingComment)
         {
+            ApplicationUser currentUser = GetApplicationUser();
+            Comment comment = incomingComment;
+            comment.Autor = new UserSummary(currentUser);
+
             var dbKommentar = _context.Kommentars
-                .Where(k => k.Id == kommentar.Id)
+                .Where(k => k.Id == incomingComment.Id)
                 .FirstOrDefault();
             if (dbKommentar != null)
             {
-                dbKommentar.Inhalt = kommentar.Inhalt;
-                dbKommentar.Titel = kommentar.Titel;
+                dbKommentar.Inhalt = incomingComment.Inhalt;
+                dbKommentar.Titel = incomingComment.Titel;
+                _context.SaveChanges();
+                return Ok(new Comment(dbKommentar));
             }
             else
             {
-                dbKommentar = kommentar;
+                dbKommentar = new Kommentar(incomingComment, currentUser);
                 _context.Kommentars
                     .Add(dbKommentar);
+                _context.SaveChanges();
+                return CreatedAtAction(nameof(CreateOrUpdate), new { id = dbKommentar.Id } ,new Comment(dbKommentar));
             }
-            _context.SaveChanges();
-            return dbKommentar;
+        }
+
+        private ApplicationUser GetApplicationUser()
+        {
+            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _context.Users.Where(u => u.Id == userId).FirstOrDefault();
         }
     }
 }
