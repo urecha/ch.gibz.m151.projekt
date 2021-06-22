@@ -4,10 +4,10 @@
     <div class="col align-self-center">
         {{user.name}}
     </div>
-    <div class="col-auto align-self-center" *ngIf="user.buenzliRanking <= user.halbschuehRanking">
+    <div class="col-auto align-self-center" *ngIf="isTopBuenzli">
         <span title="Buenzli-Rang"><i class="fa fa-award mr-1"></i>{{user.buenzliRanking}}</span>
     </div>
-    <div class="col-auto align-self-center" *ngIf="user.buenzliRanking > user.halbschuehRanking">
+    <div class="col-auto align-self-center" *ngIf="!isTopBuenzli">
         <span title="Halbschueh-Rang"><i class="fa fa-poo mr-1"></i>{{user.halbschuehRanking}}</span>
     </div>
 </div>
