@@ -96,7 +96,7 @@ namespace ch.gibz.m151.projekt.Controllers
                 .Take(3);
 
             var topBuenzlis = TransformAppUserToBuenzli(topDbBuenzlis.ToList());
-            AddRankingBuenzli(topBuenzlis);
+            AddRankingHalbschueh(topBuenzlis);
             return SanitizeUsers(topBuenzlis);
         }
 

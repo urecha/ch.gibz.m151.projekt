@@ -19,6 +19,7 @@ export class CommentService {
 
   getForArticle(articleId: string): Observable<Comment[]> {
     const requestUrl = `${this.baseRoute}/${articleId}`;
+    console.log("request sent");
 
     return this.httpClient.get<Comment[]>(requestUrl);
   }

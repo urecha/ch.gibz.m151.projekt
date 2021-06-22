@@ -34,10 +34,11 @@ namespace ch.gibz.m151.projekt.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public IActionResult GetForArticle([FromRoute] int id)
+        public IActionResult GetForArticle([FromRoute] string id)
         {
+
             var comments = _context.Kommentars
-                .Where(k => k.Beitrag.Id == id)
+                .Where(k => k.Beitrag.Id == int.Parse(id))
                 .Select(k => new Comment(k))
                 .ToList();
 
