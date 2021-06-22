@@ -17,7 +17,7 @@ namespace ch.gibz.m151.projekt.Business.BeitragLogic
 
         public IEnumerable<ArticleSummary> GetSummaries(int count = 10);
 
-        public Article CreateOrUpdate(Article incomingArticle);
+        public CreatedBeitrag CreateOrUpdate(Article incomingArticle);
 
         public void DeleteArticle(int id);
     }

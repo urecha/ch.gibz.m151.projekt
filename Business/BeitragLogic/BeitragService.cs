@@ -1,5 +1,4 @@
-﻿using ch.gibz.m151.projekt.Business.Beitrag;
-using ch.gibz.m151.projekt.Business.BeitragLogic;
+﻿using ch.gibz.m151.projekt.Business.BeitragLogic;
 using ch.gibz.m151.projekt.Data;
 using ch.gibz.m151.projekt.Models;
 using ch.gibz.m151.projekt.Models.DTO;
@@ -76,7 +75,7 @@ namespace ch.gibz.m151.projekt.Business
             return LatestArticles.Take(count).Select(a => new ArticleSummary(a));
         }
 
-        public Article CreateOrUpdate(Article incomingArticle)
+        public CreatedBeitrag CreateOrUpdate(Article incomingArticle)
         {
             ApplicationUser currentUser = GetApplicationUser();
             Article article = incomingArticle;
@@ -89,7 +88,7 @@ namespace ch.gibz.m151.projekt.Business
                 dbBeitrag.Inhalt = article.Inhalt;
                 dbBeitrag.Titel = article.Titel;
                 _context.SaveChanges();
-                return new Article(dbBeitrag);
+                return new CreatedBeitrag(dbBeitrag);
             }
             else
             {
@@ -97,7 +96,7 @@ namespace ch.gibz.m151.projekt.Business
                 _context.Beitrags
                     .Add(dbBeitrag);
                 _context.SaveChanges();
-                return new Article(dbBeitrag);
+                return new CreatedBeitrag(dbBeitrag, dbBeitrag.Id);
             }
         }
 
