@@ -37,7 +37,6 @@ namespace ch.gibz.m151.projekt.Models
             BeitragLikes = new HashSet<BeitragLike>();
             Kommentars = new HashSet<Kommentar>();
 
-            Id = article.Id;
             Titel = article.Titel;
             ErstelltAm = article.Datum;
             Inhalt = article.Inhalt;
