@@ -97,6 +97,7 @@ export class ArticleComponent implements OnInit {
     comment.likes = [];
 
     this.commentService.createOrUpdate(comment).subscribe(comment => {
+      if(!this.article.kommentare) this.article.kommentare = [];
       this.article.kommentare.push(comment);
       this.commentMode = false;
       this.comment = '';
