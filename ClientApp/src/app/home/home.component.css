@@ -7,8 +7,8 @@
     margin: 20px 0 50px 0;
 }
 .articles{
-    max-height: 70vh;
-    overflow: auto;
+    max-height: 66vh;
+    overflow-y: auto;
 }
 aside{
     margin: 20px 0 50px 0;
