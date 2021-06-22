@@ -64,6 +64,7 @@ namespace ch.gibz.m151.projekt.Controllers
             ApplicationUser currentUser = GetApplicationUser();
             Comment comment = incomingComment;
             comment.Autor = new UserSummary(currentUser);
+            comment.Beitrag = GetBeitrag(comment.ArticleId);
 
             var dbKommentar = _context.Kommentars
                 .Where(k => k.Id == incomingComment.Id)
@@ -77,7 +78,7 @@ namespace ch.gibz.m151.projekt.Controllers
             }
             else
             {
-                dbKommentar = new Kommentar(incomingComment, currentUser);
+                dbKommentar = new Kommentar(comment, currentUser);
                 _context.Kommentars
                     .Add(dbKommentar);
                 _context.SaveChanges();
@@ -89,6 +90,11 @@ namespace ch.gibz.m151.projekt.Controllers
         {
             var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             return _context.Users.Where(u => u.Id == userId).FirstOrDefault();
+        }
+
+        private Beitrag GetBeitrag(int id)
+        {
+            return _context.Beitrags.Where(b => b.Id == id).FirstOrDefault();
         }
     }
 }

@@ -19,8 +19,7 @@ namespace ch.gibz.m151.projekt.Models
             this.Inhalt = comment.Inhalt;
             this.Datum = comment.Datum;
             this.Autor = user;
-            this.Beitrag.Id = comment.ArticleId;
-
+            this.Beitrag = comment.Beitrag;
             this.KommentarLikes = new HashSet<KommentarLike>();
         }
 
@@ -28,7 +27,6 @@ namespace ch.gibz.m151.projekt.Models
         public string Titel { get; set; }
         public string Inhalt { get; set; }
         public DateTime Datum { get; set; }
-
         public ApplicationUser Autor { get; set; }
         public Beitrag Beitrag { get; set; }
         public ICollection<KommentarLike> KommentarLikes { get; set; }
