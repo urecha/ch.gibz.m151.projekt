@@ -86,10 +86,7 @@ namespace ch.gibz.m151.projekt.Business.KommentarLogic
             var toLike = _context.Kommentars
                 .Where(k => k.Id == id)
                 .FirstOrDefault();
-            KommentarLike newLike = new KommentarLike();
-            newLike.Kommentar = toLike;
-            newLike.IstDislike = false;
-            newLike.User = GetApplicationUser();
+            KommentarLike newLike = new KommentarLike(toLike, GetApplicationUser(), false);
             toLike.KommentarLikes.Add(newLike);
             _context.SaveChanges();
         }
@@ -99,10 +96,7 @@ namespace ch.gibz.m151.projekt.Business.KommentarLogic
             var toLike = _context.Kommentars
                 .Where(k => k.Id == id)
                 .FirstOrDefault();
-            KommentarLike newLike = new KommentarLike();
-            newLike.Kommentar = toLike;
-            newLike.IstDislike = true;
-            newLike.User = GetApplicationUser();
+            KommentarLike newLike = new KommentarLike(toLike, GetApplicationUser(), true);
             toLike.KommentarLikes.Add(newLike);
             _context.SaveChanges();
         }
