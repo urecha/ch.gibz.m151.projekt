@@ -18,7 +18,10 @@
           </div>
         </div>
       </div>
-      <span class="col-auto clickable" (click)="createArticle()" [style.align-self]="'center'"><i class="fa fa-plus-square"></i> Öppis verzapfe</span>
+      <span *ngIf="isAuthenticated | async else hint" class="col-auto clickable" (click)="createArticle()" [style.align-self]="'center'"><i class="fa fa-plus-square"></i> Öppis verzapfe</span>
+      <ng-template #hint>
+        <span class="col-auto">Ilogge zum metmache!</span>
+      </ng-template>
     </div>
 
     <div class="articles" *ngIf="!loading else amlade">     

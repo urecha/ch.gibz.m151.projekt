@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
+import { AuthorizeService } from 'src/api-authorization/authorize.service';
 import { User } from 'src/data/models/user';
 import { UserService } from 'src/data/services/user.service';
 import { ArticleSummary } from '../../data/models/article';
@@ -25,15 +26,19 @@ export class HomeComponent implements OnInit {
   public currentSortingMethod: SortingMethod;
   public currentBuenzliSortingMethod: BuenzliSortingMethod;
 
+  public isAuthenticated: Observable<boolean>;
+
   constructor(
     private readonly articleService: ArticleService,
     private readonly userService: UserService,
     private readonly router: Router,
+    private readonly authorizeService: AuthorizeService
   ) { }
 
   async ngOnInit() {
     this.selectSortingMethod(SortingMethod.LATEST);
     this.selectBuenzliSortingMethod(BuenzliSortingMethod.OVERALL);
+    this.isAuthenticated = this.authorizeService.isAuthenticated();
   }
 
   public createArticle(){
