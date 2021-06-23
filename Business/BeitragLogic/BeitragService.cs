@@ -60,7 +60,7 @@ namespace ch.gibz.m151.projekt.Business
                 .Include(b => b.Autor)
                 .ToList();
 
-            var shittiestArticles = allArticles.OrderBy(b => b.GetTotalDislikes());
+            var shittiestArticles = allArticles.OrderByDescending(b => b.GetTotalDislikes());
             count = count > shittiestArticles.Count() ? shittiestArticles.Count() : count;
 
             return shittiestArticles.Take(count).Select(a => new ArticleSummary(a));
