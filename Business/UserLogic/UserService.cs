@@ -78,7 +78,7 @@ namespace ch.gibz.m151.projekt.Business.UserLogic
             var allBuenzlis = GetApplicationUsers();
 
             var topDbBuenzlis = allBuenzlis
-                .OrderBy(u => (u.getArticleLikes() + u.getCommentLikes()))
+                .OrderBy(u => (u.getArticleDislikes() + u.getCommentDislikes()))
                 .ToList()
                 .Take(3);
 
@@ -92,7 +92,7 @@ namespace ch.gibz.m151.projekt.Business.UserLogic
             var allBuenzlis = GetApplicationUsers();
 
             var topDbBuenzlis = allBuenzlis
-                .OrderBy(u => u.getArticleLikes())
+                .OrderBy(u => u.getArticleDislikes())
                 .ToList()
                 .Take(3);
 
@@ -106,7 +106,7 @@ namespace ch.gibz.m151.projekt.Business.UserLogic
             var allBuenzlis = GetApplicationUsers();
 
             var topDbBuenzlis = allBuenzlis
-                .OrderBy(u => u.getCommentLikes())
+                .OrderBy(u => u.getCommentDislikes())
                 .ToList()
                 .Take(3);
 
