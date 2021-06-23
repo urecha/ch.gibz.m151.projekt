@@ -5,9 +5,15 @@
     background-color: #eee;
     box-shadow: 2px 3px 2px lightgray;
     margin: 20px 0 50px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 .articles{
     max-height: 66vh;
+}
+article{
+    overflow-y: auto;
 }
 aside{
     margin: 20px 0 50px 0;
