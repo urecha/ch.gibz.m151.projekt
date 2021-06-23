@@ -36,7 +36,7 @@ export class ArticleSummaryComponent implements OnInit {
   }
 
   private toggleLikes(){
-    this.authorizeService.getUser().toPromise().then(user => {
+    this.authorizeService.getUser().subscribe(user => {
       this.liked = this.article.beitragLikes.find(bl => !bl.istDislike && bl.user.name == user.name) ? true : false;
       this.disliked = this.article.beitragLikes.find(bl => bl.istDislike && bl.user.name == user.name) ? true : false;
     })

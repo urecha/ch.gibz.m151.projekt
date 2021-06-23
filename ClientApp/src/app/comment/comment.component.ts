@@ -33,7 +33,7 @@ export class CommentComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.authorizeService.getUser().toPromise().then(user => {
+    this.authorizeService.getUser().subscribe(user => {
       this.liked = this.comment.autor.name === user.name;
     })
   }
