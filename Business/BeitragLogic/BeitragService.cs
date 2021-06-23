@@ -114,5 +114,16 @@ namespace ch.gibz.m151.projekt.Business
             var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             return _context.Users.Where(u => u.Id == userId).FirstOrDefault();
         }
+
+        public void LikeArticle(int id)
+        {
+            var toLike = _context.Beitrags.Where(b => b.Id == id).FirstOrDefault();
+            BeitragLike newLike = new BeitragLike();
+            newLike.Beitrag = toLike;
+            newLike.IstDislike = false;
+            newLike.User = GetApplicationUser();
+            toLike.BeitragLikes.Add(newLike);
+            _context.SaveChanges();
+        }
     }
 }

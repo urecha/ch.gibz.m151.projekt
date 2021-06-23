@@ -20,5 +20,7 @@ namespace ch.gibz.m151.projekt.Business.BeitragLogic
         public CreatedBeitrag CreateOrUpdate(Article incomingArticle);
 
         public void DeleteArticle(int id);
+
+        public void LikeArticle(int id);
     }
 }

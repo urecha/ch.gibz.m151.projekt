@@ -80,7 +80,8 @@ export class ArticleService {
    * Likes or unlikes an article, depending on whether it was liked or not before
    */
    likeArticle(id: number): Observable<void>{
-    const requestUrl = `${this.baseRoute}/${id}/like`;
+     const requestUrl = `${this.baseRoute}/${id}/like`;
+     console.log("Like pressed");
 
     return this.httpClient.get<void>(requestUrl);
   }

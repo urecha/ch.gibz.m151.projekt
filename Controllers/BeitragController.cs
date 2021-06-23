@@ -83,6 +83,14 @@ namespace ch.gibz.m151.projekt.Controllers
             return Ok();
         }
 
+        [HttpGet]
+        [Route("{id}/like")]
+        public IActionResult LikeArticle(int id)
+        {
+            beitragService.LikeArticle(id);
+            return Ok();
+        }
+
         private ApplicationUser GetApplicationUser()
         {
             var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
