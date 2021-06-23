@@ -1,7 +1,9 @@
-﻿using ch.gibz.m151.projekt.Data;
+﻿using ch.gibz.m151.projekt.Business.UserLogic;
+using ch.gibz.m151.projekt.Data;
 using ch.gibz.m151.projekt.Models;
 using ch.gibz.m151.projekt.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -18,20 +20,20 @@ namespace ch.gibz.m151.projekt.Controllers
 
         private ApplicationDbContext _context;
 
+        private readonly UserService userService;
+
         public UserController(ILogger<UserController> logger, ApplicationDbContext context)
         {
             _logger = logger;
             _context = context;
+            userService = new UserService(context, new HttpContextAccessor());
         }
 
         [HttpGet]
         [Route("User")]
         public User Get(string id)
         {
-            var dbUser = _context.Users
-                .Where(u => u.Id == id)
-                .FirstOrDefault();
-            var user = new User(dbUser);
+            var user = userService.Get(id);
             // Add rankings to user
             return user;
         }
@@ -40,96 +42,42 @@ namespace ch.gibz.m151.projekt.Controllers
         [Route("User/top-buenzlis")]
         public IEnumerable<User> GetTopBuenzli()
         {
-            var allBuenzlis = GetApplicationUsers();
-
-            var topDbBuenzlis = allBuenzlis
-                .OrderByDescending(u => (u.getArticleLikes() + u.getCommentLikes()))
-                .ToList()
-                .Take(3);
-
-            var topBuenzlis = TransformAppUserToBuenzli(topDbBuenzlis.ToList());
-            AddRankingBuenzli(topBuenzlis);
-            return SanitizeUsers(topBuenzlis);
+            return userService.GetTopBuenzli();
         }
 
         [HttpGet]
         [Route("User/top-buenzlis/articles")]
         public IEnumerable<User> GetTopBuenzliArticles()
         {
-            var allBuenzlis = GetApplicationUsers();
-
-            var topDbBuenzlis = allBuenzlis
-                .OrderByDescending(u => u.getArticleLikes())
-                .ToList()
-                .Take(3);
-
-            var topBuenzlis = TransformAppUserToBuenzli(topDbBuenzlis.ToList());
-            AddRankingBuenzli(topBuenzlis);
-            return SanitizeUsers(topBuenzlis);
+            return userService.GetTopBuenzliArticles();
         }
 
         [HttpGet]
         [Route("User/top-buenzlis/comments")]
         public IEnumerable<User> GetTopBuenzliComments()
         {
-            var allBuenzlis = GetApplicationUsers();
-
-            var topDbBuenzlis = allBuenzlis
-                .OrderByDescending(u => u.getCommentLikes())
-                .ToList()
-                .Take(3);
-
-            var topBuenzlis = TransformAppUserToBuenzli(topDbBuenzlis.ToList());
-            AddRankingBuenzli(topBuenzlis);
-            return SanitizeUsers(topBuenzlis);
+            return userService.GetTopBuenzliComments();
         }
 
         [HttpGet]
         [Route("User/top-halbschueh")]
         public IEnumerable<User> GetTopHalbschueh()
         {
-            var allBuenzlis = GetApplicationUsers();
-
-            var topDbBuenzlis = allBuenzlis
-                .OrderBy(u => (u.getArticleLikes() + u.getCommentLikes()))
-                .ToList()
-                .Take(3);
-
-            var topBuenzlis = TransformAppUserToBuenzli(topDbBuenzlis.ToList());
-            AddRankingHalbschueh(topBuenzlis);
-            return SanitizeUsers(topBuenzlis);
+            return userService.GetTopHalbschueh();
         }
 
         [HttpGet]
         [Route("User/top-halbschueh/articles")]
         public IEnumerable<User> GetTopHalbschuehArticles()
         {
-            var allBuenzlis = GetApplicationUsers();
-
-            var topDbBuenzlis = allBuenzlis
-                .OrderBy(u => u.getArticleLikes())
-                .ToList()
-                .Take(3);
-
-            var topBuenzlis = TransformAppUserToBuenzli(topDbBuenzlis.ToList());
-            AddRankingHalbschueh(topBuenzlis);
-            return SanitizeUsers(topBuenzlis);
+            return userService.GetTopHalbschuehArticles();
         }
 
         [HttpGet]
         [Route("User/top-halbschueh/comments")]
         public IEnumerable<User> GetTopHalbschuehComments()
         {
-            var allBuenzlis = GetApplicationUsers();
-
-            var topDbBuenzlis = allBuenzlis
-                .OrderBy(u => u.getCommentLikes())
-                .ToList()
-                .Take(3);
-
-            var topBuenzlis = TransformAppUserToBuenzli(topDbBuenzlis.ToList());
-            AddRankingHalbschueh(topBuenzlis);
-            return SanitizeUsers(topBuenzlis);
+            return userService.GetTopHalbschuehComments();
         }
 
         private List<ApplicationUser> GetApplicationUsers()
