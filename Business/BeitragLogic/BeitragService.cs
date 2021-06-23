@@ -29,6 +29,8 @@ namespace ch.gibz.m151.projekt.Business
                 .Where(b => b.Id == id)
                 .Include(b => b.Autor)
                 .Include(b => b.Kommentars)
+                .ThenInclude(k => k.KommentarLikes)
+                .Include(b => b.Kommentars)
                 .ThenInclude(k => k.Autor)
                 .FirstOrDefault();
 

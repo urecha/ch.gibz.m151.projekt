@@ -15,6 +15,8 @@ namespace ch.gibz.m151.projekt.Models.DTO
         public string Inhalt { get; set; }
         public DateTime Datum { get; set; }
         public virtual ICollection<CommentLike> Likes { get; set; }
+        public int LikeCount { get; set; }
+        public int DislikeCount { get; set; }
 
         public Comment(Kommentar kommentar)
         {
@@ -28,11 +30,18 @@ namespace ch.gibz.m151.projekt.Models.DTO
             {
                 this.Likes.Add(new CommentLike(like));
             }
+            SetLikes();
         }
 
         public Comment()
         {
 
+        }
+
+        private void SetLikes()
+        {
+            LikeCount = Likes.Where(l => l.IstDislike == false).ToList().Count;
+            DislikeCount = Likes.Where(l => l.IstDislike == true).ToList().Count;
         }
     }
 }

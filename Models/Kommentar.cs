@@ -1,6 +1,7 @@
 ﻿using ch.gibz.m151.projekt.Models.DTO;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 #nullable disable
 
@@ -8,6 +9,16 @@ namespace ch.gibz.m151.projekt.Models
 {
     public partial class Kommentar
     {
+        public int GetTotalLikes()
+        {
+            return KommentarLikes.Where(kl => kl.IstDislike == false).ToList().Count;
+        }
+
+        public int GetTotalDislikes()
+        {
+            return KommentarLikes.Where(kl => kl.IstDislike == true).ToList().Count;
+        }
+
         public Kommentar()
         {
             KommentarLikes = new HashSet<KommentarLike>();
