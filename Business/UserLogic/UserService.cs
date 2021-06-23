@@ -157,11 +157,11 @@ namespace ch.gibz.m151.projekt.Business.UserLogic
 
         private void AddRankingBuenzli(List<User> buenzlis)
         {
-            int currentRank = 1;
+            int currentRank = 3;
             foreach (User buenzli in buenzlis)
             {
                 buenzli.BuenzliRanking = currentRank;
-                currentRank++;
+                currentRank--;
             }
         }
 
