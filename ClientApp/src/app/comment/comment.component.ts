@@ -33,8 +33,13 @@ export class CommentComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.toggleLikes();
+  }
+
+  private toggleLikes(){
     this.authorizeService.getUser().subscribe(user => {
-      this.liked = this.comment.autor.name === user.name;
+      this.liked = this.comment.likes.find(bl => !bl.istDislike && bl.user.name == user.name) ? true : false;
+      this.disliked = this.comment.likes.find(bl => bl.istDislike && bl.user.name == user.name) ? true : false;
     })
   }
 
