@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AuthorizeService } from 'src/api-authorization/authorize.service';
 import { Comment } from 'src/data/models/comment';
+import { CommentLike } from 'src/data/models/commentLike';
 import { CommentService } from 'src/data/services/comment.service';
 
 @Component({
@@ -38,11 +39,21 @@ export class CommentComponent implements OnInit {
   }
 
   likeComment(){
-    this.commentService.likeComment(this.comment.id).subscribe(() => this.liked = !this.liked);
+    this.commentService.likeComment(this.comment.id).subscribe(() => {
+      this.liked = !this.liked
+      let mockLike = new CommentLike();
+      mockLike.istDislike = false;
+      this.comment.likes.push(mockLike);
+    });
   }
 
   dislikeComment(){
-    this.commentService.dislikeComment(this.comment.id).subscribe(() => this.disliked = !this.disliked);
+    this.commentService.dislikeComment(this.comment.id).subscribe(() => {
+      this.disliked = !this.disliked
+      let mockLike = new CommentLike();
+      mockLike.istDislike = true;
+      this.comment.likes.push(mockLike);
+    });
   }
 
 }
