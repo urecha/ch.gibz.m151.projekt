@@ -17,5 +17,9 @@ namespace ch.gibz.m151.projekt.Business.KommentarLogic
         public CreatedKommentar CreateOrUpdate(Comment incomingComment);
 
         public Beitrag GetBeitrag(int id);
+
+        public void LikeComment(int id);
+
+        public void DislikeComment(int id);
     }
 }

@@ -60,6 +60,22 @@ namespace ch.gibz.m151.projekt.Controllers
             return CreatedAtAction(nameof(CreateOrUpdate), new { id = createdComment.KommentarId }, new Comment(createdComment.Kommentar));
         }
 
+        [HttpGet]
+        [Route("{id}/like")]
+        public IActionResult LikeComment(int id)
+        {
+            kommentarService.LikeComment(id);
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("{id}/dislike")]
+        public IActionResult DislikeComment(int id)
+        {
+            kommentarService.DislikeComment(id);
+            return Ok();
+        }
+
         private ApplicationUser GetApplicationUser()
         {
             var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;

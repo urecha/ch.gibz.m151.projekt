@@ -29,6 +29,7 @@ namespace ch.gibz.m151.projekt.Business
                 .Where(b => b.Id == id)
                 .Include(b => b.Autor)
                 .Include(b => b.Kommentars)
+                .ThenInclude(k => k.Autor)
                 .FirstOrDefault();
 
             return new Article(Beitrag);
@@ -118,12 +119,18 @@ namespace ch.gibz.m151.projekt.Business
         public void LikeArticle(int id)
         {
             var toLike = _context.Beitrags.Where(b => b.Id == id).FirstOrDefault();
-            BeitragLike newLike = new BeitragLike();
-            newLike.Beitrag = toLike;
-            newLike.IstDislike = false;
-            newLike.User = GetApplicationUser();
+            BeitragLike newLike = new BeitragLike(toLike, GetApplicationUser(), false);
             toLike.BeitragLikes.Add(newLike);
             _context.SaveChanges();
         }
+
+        public void DislikeArticle(int id)
+        {
+            var toLike = _context.Beitrags.Where(b => b.Id == id).FirstOrDefault();
+            BeitragLike newLike = new BeitragLike(toLike, GetApplicationUser(), true);
+            toLike.BeitragLikes.Add(newLike);
+            _context.SaveChanges();
+        }
+
     }
 }
