@@ -44,7 +44,7 @@ namespace ch.gibz.m151.projekt.Business
 
             var hottestArticles = allArticles.OrderByDescending(b => b.GetTotalLikes());
 
-            count = count >= hottestArticles.Count() ? hottestArticles.Count() - 1 : count;
+            count = count > hottestArticles.Count() ? hottestArticles.Count() : count;
 
             return hottestArticles.Take(count).Select(a => new ArticleSummary(a));
         }
@@ -58,7 +58,7 @@ namespace ch.gibz.m151.projekt.Business
                 .ToList();
 
             var shittiestArticles = allArticles.OrderBy(b => b.GetTotalLikes());
-            count = count >= shittiestArticles.Count() ? shittiestArticles.Count() - 1 : count;
+            count = count > shittiestArticles.Count() ? shittiestArticles.Count() : count;
 
             return shittiestArticles.Take(count).Select(a => new ArticleSummary(a));
         }
@@ -70,7 +70,7 @@ namespace ch.gibz.m151.projekt.Business
                 .OrderByDescending(b => b.ErstelltAm)
                 .ToList();
 
-            count = count >= LatestArticles.Count() ? LatestArticles.Count() - 1 : count;
+            count = count > LatestArticles.Count() ? LatestArticles.Count(): count;
 
             return LatestArticles.Take(count).Select(a => new ArticleSummary(a));
         }
