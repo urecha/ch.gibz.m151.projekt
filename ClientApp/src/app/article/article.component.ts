@@ -27,6 +27,16 @@ export class ArticleComponent implements OnInit {
   liked: boolean;
   disliked: boolean;
 
+  get likes(): number{
+    if(!this.article.beitragLikes || !this.article.beitragLikes.length) return 0;
+    return this.article.beitragLikes.filter(bl => !bl.istDislike).length;
+  }
+
+  get dislikes(): number{
+    if(!this.article.beitragLikes || !this.article.beitragLikes.length) return 0;
+    return this.article.beitragLikes.filter(bl => bl.istDislike).length;
+  }
+
   constructor(
     private readonly articleService: ArticleService,
     private readonly commentService: CommentService,
@@ -111,8 +121,9 @@ export class ArticleComponent implements OnInit {
   }
 
   likeArticle() {
+    if(this.liked) return;
     this.articleService.likeArticle(this.article.id).subscribe(() => {
-      this.liked = !this.liked;
+      this.liked = true;
       let like = new ArticleLike();
       like.istDislike = false;
       this.article.beitragLikes.push(like);
@@ -120,8 +131,9 @@ export class ArticleComponent implements OnInit {
   }
 
   dislikeArticle() {
+    if(this.disliked) return;
     this.articleService.dislikeArticle(this.article.id).subscribe(() => {
-      this.disliked = !this.disliked
+      this.disliked = true;
       let like = new ArticleLike();
       like.istDislike = true;
       this.article.beitragLikes.push(like);

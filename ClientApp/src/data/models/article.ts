@@ -15,17 +15,7 @@ export class Article {
 
   beitragLikes: ArticleLike[];
 
-  kommentare: Comment[]; 
-
-  get likes(): number{
-    if(!this.beitragLikes || !this.beitragLikes.length) return 0;
-    return this.beitragLikes.filter(bl => !bl.istDislike).length;
-  }
-
-  get dislikes(): number{
-    if(!this.beitragLikes || !this.beitragLikes.length) return 0;
-    return this.beitragLikes.filter(bl => bl.istDislike).length;
-  }
+  kommentare: Comment[];
 }
 
 export class ArticleSummary{
@@ -40,12 +30,5 @@ export class ArticleSummary{
   datum: Date;
   
   beitragLikes: ArticleLike[];
-  
-  get likes(): number{
-    return this.beitragLikes.filter(bl => !bl.istDislike).length;
-  }
-  
-  get dislikes(): number{
-    return this.beitragLikes.filter(bl => bl.istDislike).length;
-  }
+
 }
