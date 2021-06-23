@@ -80,12 +80,10 @@ export class HomeComponent implements OnInit {
     try {
       this.loading = true;
       this.articles = await this.articleService.getSummaries().toPromise();
-      console.log(this.loading);
     } catch (error) {
       console.log(error);
     } finally {
       this.loading = false;
-      console.log(this.loading);
     }
   }
 

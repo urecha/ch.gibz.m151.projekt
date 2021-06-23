@@ -33,14 +33,15 @@ export class CommentComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.authorizeService.getUser().toPromise().then(user => {
+    this.authorizeService.getUser().subscribe(user => {
       this.liked = this.comment.autor.name === user.name;
     })
   }
 
   likeComment(){
+    if(this.liked) return;
     this.commentService.likeComment(this.comment.id).subscribe(() => {
-      this.liked = !this.liked
+      this.liked = true;
       let mockLike = new CommentLike();
       mockLike.istDislike = false;
       this.comment.likes.push(mockLike);
@@ -48,8 +49,9 @@ export class CommentComponent implements OnInit {
   }
 
   dislikeComment(){
+    if(this.disliked) return;
     this.commentService.dislikeComment(this.comment.id).subscribe(() => {
-      this.disliked = !this.disliked
+      this.disliked = true;
       let mockLike = new CommentLike();
       mockLike.istDislike = true;
       this.comment.likes.push(mockLike);
