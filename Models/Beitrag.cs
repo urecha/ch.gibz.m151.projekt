@@ -14,6 +14,11 @@ namespace ch.gibz.m151.projekt.Models
             return BeitragLikes.Where(bl => bl.IstDislike == false).ToList().Count;
         }
 
+        public int GetTotalDislikes()
+        {
+            return BeitragLikes.Where(bl => bl.IstDislike == true).ToList().Count;
+        }
+
         public Beitrag()
         {
             BeitragLikes = new HashSet<BeitragLike>();
