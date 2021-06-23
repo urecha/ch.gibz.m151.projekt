@@ -54,7 +54,7 @@ export class CommentService {
   /**
    * Disikes or undislikes a comment, depending on whether it was disliked or not before
    */
-   disikeComment(id: number): Observable<void>{
+   dislikeComment(id: number): Observable<void>{
     const requestUrl = `${this.baseRoute}/${id}/dislike`;
 
     return this.httpClient.get<void>(requestUrl);
