@@ -5,3 +5,6 @@
     background-color: rgb(255, 226, 131);
     color: black;
 }
+.clickable{
+    cursor: pointer;
+}
