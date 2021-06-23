@@ -122,10 +122,12 @@ namespace ch.gibz.m151.projekt.Business.UserLogic
                 foreach (KommentarLike like in user.CommentLikes)
                 {
                     like.User = null;
+                    like.Kommentar = null;
                 }
                 foreach (BeitragLike like in user.ArticleLikes)
                 {
                     like.User = null;
+                    like.Beitrag = null;
                 }
             }
             return users;
@@ -166,8 +168,10 @@ namespace ch.gibz.m151.projekt.Business.UserLogic
         private List<ApplicationUser> GetApplicationUsers()
         {
             return _context.Users
-                .Include(u => u.BeitragLikes)
-                .Include(u => u.KommentarLikes)
+                .Include(u => u.Beitrags)
+                .ThenInclude(u => u.BeitragLikes)
+                .Include(u => u.Kommentars)
+                .ThenInclude(k => k.KommentarLikes)
                 .ToList();
         }
     }
