@@ -40,9 +40,9 @@
                 <div class="col corrected">
                     Verzapft vom <span class="text-muted">{{article.autor.name}}</span> am <span class="text-muted">{{article.datum | date:'d. MMM yy'}}</span>
                 </div>
-                <div class="col-auto">
-                    <a class="clickable" title="findi laess" [style.color]="liked ? '#0066cc' : 'black'"><i class="fa fa-thumbs-up mr-1" [style.color]=""></i> {{article.likes}}</a>
-                    <a class="clickable" title="findi chabis" [style.color]="liked ? 'brown' : 'black'"><i class="fa fa-poo mr-1" [style.color]=""></i> {{article.dislikes}}</a>
+                <div class="col-auto mr-2">
+                    <a class="clickable" title="findi laess" (click)="likeArticle($event)" [style.color]="liked ? '#0066cc' : 'black'"><i class="fa fa-thumbs-up ml-1"></i> {{article.likes}}</a>
+                    <a class="clickable" title="findi chabis" (click)="dislikeArticle()" [style.color]="disliked ? 'brown' : 'black'"><i class="fa fa-poo ml-1"></i> {{article.dislikes}}</a>
                   </div>
             </footer>
         </div>

@@ -28,22 +28,12 @@ export class ArticleSummaryComponent implements OnInit {
     })
   }
 
-  likeArticle(){
-    this.authorizeService.isAuthenticated().subscribe(authenticated => {
-      if(!authenticated){
-        return;
-      }
-      this.articleService.likeArticle(this.article.id).subscribe(() => this.liked = !this.liked);
-    })
+  likeArticle(event: any) {
+    this.articleService.likeArticle(this.article.id).subscribe(() => this.liked = !this.liked);
   }
 
-  dislikeArticle(){
-    this.authorizeService.isAuthenticated().subscribe(authenticated => {
-      if(!authenticated){
-        return;
-      }
-      this.articleService.dislikeArticle(this.article.id).subscribe(() => this.disliked = !this.disliked);
-    })
+  dislikeArticle() {
+    this.articleService.dislikeArticle(this.article.id).subscribe(() => this.disliked = !this.disliked);
   }
 
 }

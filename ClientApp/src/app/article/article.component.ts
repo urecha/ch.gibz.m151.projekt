@@ -97,7 +97,7 @@ export class ArticleComponent implements OnInit {
     comment.likes = [];
 
     this.commentService.createOrUpdate(comment).subscribe(comment => {
-      if(!this.article.kommentare) this.article.kommentare = [];
+      if (!this.article.kommentare) this.article.kommentare = [];
       this.article.kommentare.push(comment);
       this.commentMode = false;
       this.comment = '';
@@ -106,22 +106,10 @@ export class ArticleComponent implements OnInit {
   }
 
   likeArticle() {
-    this.authorizeService.isAuthenticated().subscribe(authenticated => {
-      if (!authenticated) {
-        console.log('Unauthorized!');
-        return;
-      }
-      this.articleService.likeArticle(this.article.id).subscribe(() => this.liked = !this.liked);
-    })
+    this.articleService.likeArticle(this.article.id).subscribe(() => this.liked = !this.liked);
   }
 
   dislikeArticle() {
-    this.authorizeService.isAuthenticated().subscribe(authenticated => {
-      if (!authenticated) {
-        console.log('Unauthorized!');
-        return;
-      }
-      this.articleService.dislikeArticle(this.article.id).subscribe(() => this.disliked = !this.disliked);
-    })
+    this.articleService.dislikeArticle(this.article.id).subscribe(() => this.disliked = !this.disliked);
   }
 }
