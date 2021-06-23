@@ -14,6 +14,18 @@ export class CommentComponent implements OnInit {
 
   liked: boolean;
 
+  disliked: boolean;
+
+  get actualLikes(): number{
+    if(!this.comment) return 0;
+    return this.comment.likes.filter(l => !l.istDislike).length;
+  }
+
+  get dislikes(): number{
+    if(!this.comment) return 0;
+    return this.comment.likes.filter(l => l.istDislike).length;
+  }
+
   constructor(
     private authorizeService: AuthorizeService,
     private commentService: CommentService,
@@ -27,6 +39,10 @@ export class CommentComponent implements OnInit {
 
   likeComment(){
     this.commentService.likeComment(this.comment.id).subscribe(() => this.liked = !this.liked);
+  }
+
+  dislikeComment(){
+    this.commentService.dislikeComment(this.comment.id).subscribe(() => this.disliked = !this.disliked);
   }
 
 }
