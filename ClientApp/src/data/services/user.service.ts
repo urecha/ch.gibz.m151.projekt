@@ -16,7 +16,7 @@ export class UserService {
   /**
    * Gets a simple usersummary..
    */
-  getSummary(id?: string, username?: string): Observable<UserSummary>{
+  getSummary(id?: string, username?: string): Observable<UserSummary> {
     const requestUrl = `${this.baseRoute}/summary/${id ? id : username ? username : ''}`;
 
     return this.httpClient.get<UserSummary>(requestUrl);
@@ -25,7 +25,7 @@ export class UserService {
   /**
    * Gets a user's summary along with its ranking and like-count
    */
-  get(id?: string, username?: string): Observable<User>{
+  get(id?: string, username?: string): Observable<User> {
     const requestUrl = `${this.baseRoute}/${id ? id : username ? username : ''}`;
 
     return this.httpClient.get<User>(requestUrl);
@@ -34,7 +34,7 @@ export class UserService {
   /**
    * Gets the 3 top buenzlis (most likes overall)
    */
-  getTopBuenzlis(): Observable<User[]>{
+  getTopBuenzlis(): Observable<User[]> {
     const requestRoute = `${this.baseRoute}/top-buenzlis`;
 
     return this.httpClient.get<User[]>(requestRoute);
@@ -43,7 +43,7 @@ export class UserService {
   /**
    * Gets the 3 top buenzlis (most likes on articles)
    */
-   getTopBuenzlisForArticles(): Observable<User[]>{
+  getTopBuenzlisForArticles(): Observable<User[]> {
     const requestRoute = `${this.baseRoute}/top-buenzlis/articles`;
 
     return this.httpClient.get<User[]>(requestRoute);
@@ -52,7 +52,7 @@ export class UserService {
   /**
    * Gets the 3 top buenzlis (most likes on comments)
    */
-   getTopBuenzlisForComments(): Observable<User[]>{
+  getTopBuenzlisForComments(): Observable<User[]> {
     const requestRoute = `${this.baseRoute}/top-buenzlis/comments`;
 
     return this.httpClient.get<User[]>(requestRoute);
@@ -61,7 +61,7 @@ export class UserService {
   /**
    * Gets the 3 top halbschueh (most dislikes overall)
    */
-  getTopHalbschueh(): Observable<User[]>{
+  getTopHalbschueh(): Observable<User[]> {
     const requestRoute = `${this.baseRoute}/top-halbschueh`;
 
     return this.httpClient.get<User[]>(requestRoute);
@@ -70,7 +70,7 @@ export class UserService {
   /**
    * Gets the 3 top halbschueh (most dislikes on articles)
    */
-   getTopHalbschuehForArticles(): Observable<User[]>{
+  getTopHalbschuehForArticles(): Observable<User[]> {
     const requestRoute = `${this.baseRoute}/top-halbschueh`;
 
     return this.httpClient.get<User[]>(requestRoute);
@@ -79,7 +79,7 @@ export class UserService {
   /**
    * Gets the 3 top halbschueh (most dislikes for comments)
    */
-   getTopHalbschuehForComments(): Observable<User[]>{
+  getTopHalbschuehForComments(): Observable<User[]> {
     const requestRoute = `${this.baseRoute}/top-halbschueh`;
 
     return this.httpClient.get<User[]>(requestRoute);
@@ -90,7 +90,8 @@ export class UserService {
      * @param username The user's usrename
      * @returns String defining an svg 
      */
-   getGenericProfilePicture(username: string): string{
-    return `<svg viewbox="0 0 20 20"><circle cx="10" cy="10" r="8" stroke="black" stroke-width="1px" fill="red"/><text font-size="x-small" x="50%" y="50%" fill="white" alignment-baseline="central" text-anchor="middle">${username.charAt(0).toUpperCase()}${username.charAt(username.length-1).toUpperCase()}`;
-}
+  getGenericProfilePicture(username: string): string {
+    if (!username) return `<svg viewbox="0 0 20 20"><circle cx="10" cy="10" r="8" stroke="black" stroke-width="1px" fill="red"/><text font-size="x-small" x="50%" y="50%" fill="white" alignment-baseline="central" text-anchor="middle">?</text>`;
+    return `<svg viewbox="0 0 20 20"><circle cx="10" cy="10" r="8" stroke="black" stroke-width="1px" fill="red"/><text font-size="x-small" x="50%" y="50%" fill="white" alignment-baseline="central" text-anchor="middle">${username.charAt(0).toUpperCase()}${username.charAt(username.length - 1).toUpperCase()}</text>`;
+  }
 }
