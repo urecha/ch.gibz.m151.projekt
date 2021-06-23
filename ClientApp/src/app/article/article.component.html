@@ -41,8 +41,8 @@
                     Verzapft vom <span class="text-muted">{{article.autor.name}}</span> am <span class="text-muted">{{article.datum | date:'d. MMM yy'}}</span>
                 </div>
                 <div class="col-auto mr-2">
-                    <a class="clickable" title="findi laess" (click)="likeArticle($event)" [style.color]="liked ? '#0066cc' : 'black'"><i class="fa fa-thumbs-up ml-1"></i> {{article.likes}}</a>
-                    <a class="clickable" title="findi chabis" (click)="dislikeArticle()" [style.color]="disliked ? 'brown' : 'black'"><i class="fa fa-poo ml-1"></i> {{article.dislikes}}</a>
+                    <a class="clickable" title="findi laess" (click)="likeArticle($event)" [style.color]="liked ? '#0066cc' : 'black'"><i class="fa fa-thumbs-up ml-1"></i> {{likes}}</a>
+                    <a class="clickable" title="findi chabis" (click)="dislikeArticle()" [style.color]="disliked ? 'brown' : 'black'"><i class="fa fa-poo ml-1"></i> {{dislikes}}</a>
                   </div>
             </footer>
         </div>
