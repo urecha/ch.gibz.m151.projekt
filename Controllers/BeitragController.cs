@@ -46,7 +46,7 @@ namespace ch.gibz.m151.projekt.Controllers
 
         [HttpGet]
         [Route("hottest")]
-        public IActionResult GetHottest(int count = 10)
+        public IActionResult GetHottest(int count = 100)
         {
             var hottestArticles = beitragService.GetHottest(count);
             return Ok(hottestArticles);
@@ -54,14 +54,14 @@ namespace ch.gibz.m151.projekt.Controllers
 
         [HttpGet]
         [Route("shittiest")]
-        public IActionResult GetShittiest(int count = 10)
+        public IActionResult GetShittiest(int count = 100)
         {
             var shittiestArticles = beitragService.GetShittiest(count);
             return Ok(shittiestArticles);
         }
 
         [HttpGet]
-        public IActionResult GetSummaries(int count = 10)
+        public IActionResult GetSummaries(int count = 100)
         {
             var summaries = beitragService.GetSummaries(count);
             return Ok(summaries);
