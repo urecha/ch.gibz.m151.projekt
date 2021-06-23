@@ -21,19 +21,40 @@ export class ArticleSummaryComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.toggleLikes();
+  }
+
+  private toggleLikes(){
     this.authorizeService.getUser().toPromise().then(user => {
-      let username = user.name;
-      this.liked = this.article.beitragLikes.find(bl => !bl.istDislike && bl.user.name == username) ? true : false;
-      this.disliked = this.article.beitragLikes.find(bl => bl.istDislike && bl.user.name == username) ? true : false;
+      this.liked = this.article.beitragLikes.find(bl => !bl.istDislike && bl.user.name == user.name) ? true : false;
+      this.disliked = this.article.beitragLikes.find(bl => bl.istDislike && bl.user.name == user.name) ? true : false;
     })
   }
 
-  likeArticle(event: any) {
-    this.articleService.likeArticle(this.article.id).subscribe(() => this.liked = !this.liked);
+  async likeArticle() {
+    this.articleService.likeArticle(this.article.id).subscribe(async (alike) => {
+      if(alike == null){
+        const user = await this.authorizeService.getUser().toPromise();
+        let index = this.article.beitragLikes.indexOf(this.article.beitragLikes.find(l => l.user.name == user.name));
+        this.article.beitragLikes.splice(index, 1);
+      } else{
+        this.article.beitragLikes.push(alike);
+      }
+      this.toggleLikes();
+    });
   }
 
-  dislikeArticle() {
-    this.articleService.dislikeArticle(this.article.id).subscribe(() => this.disliked = !this.disliked);
+  async dislikeArticle() {
+    this.articleService.dislikeArticle(this.article.id).subscribe(async (alike) => {
+      if(alike == null){
+        const user = await this.authorizeService.getUser().toPromise();
+        let index = this.article.beitragLikes.indexOf(this.article.beitragLikes.find(l => l.user.name == user.name));
+        this.article.beitragLikes.splice(index, 1);
+      } else{
+        this.article.beitragLikes.push(alike);
+      }
+      this.toggleLikes();
+    });
   }
 
 }

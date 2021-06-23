@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Comment } from '../models/comment';
+import { CommentLike } from '../models/commentLike';
 
 @Injectable({
   providedIn: 'root',
@@ -45,18 +46,18 @@ export class CommentService {
   /**
    * Likes or unlikes a comment, depending on whether it was liked or not before
    */
-  likeComment(id: number): Observable<void>{
+  likeComment(id: number): Observable<CommentLike>{
     const requestUrl = `${this.baseRoute}/${id}/like`;
 
-    return this.httpClient.get<void>(requestUrl);
+    return this.httpClient.get<CommentLike>(requestUrl);
   }
 
   /**
    * Disikes or undislikes a comment, depending on whether it was disliked or not before
    */
-   disikeComment(id: number): Observable<void>{
+   dislikeComment(id: number): Observable<CommentLike>{
     const requestUrl = `${this.baseRoute}/${id}/dislike`;
 
-    return this.httpClient.get<void>(requestUrl);
+    return this.httpClient.get<CommentLike>(requestUrl);
   }
 }

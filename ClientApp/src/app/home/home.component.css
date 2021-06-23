@@ -8,10 +8,10 @@
 }
 .articles{
     max-height: 66vh;
-    overflow-y: auto;
 }
 aside{
     margin: 20px 0 50px 0;
+    position: fixed;
 }
 .abegumper {
     position: relative;
