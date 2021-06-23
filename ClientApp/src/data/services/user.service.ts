@@ -71,7 +71,7 @@ export class UserService {
    * Gets the 3 top halbschueh (most dislikes on articles)
    */
   getTopHalbschuehForArticles(): Observable<User[]> {
-    const requestRoute = `${this.baseRoute}/top-halbschueh`;
+    const requestRoute = `${this.baseRoute}/top-halbschueh/articles`;
 
     return this.httpClient.get<User[]>(requestRoute);
   }
@@ -80,7 +80,7 @@ export class UserService {
    * Gets the 3 top halbschueh (most dislikes for comments)
    */
   getTopHalbschuehForComments(): Observable<User[]> {
-    const requestRoute = `${this.baseRoute}/top-halbschueh`;
+    const requestRoute = `${this.baseRoute}/top-halbschueh/comments`;
 
     return this.httpClient.get<User[]>(requestRoute);
   }

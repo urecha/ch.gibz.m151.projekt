@@ -78,7 +78,7 @@ namespace ch.gibz.m151.projekt.Business.UserLogic
             var allBuenzlis = GetApplicationUsers();
 
             var topDbBuenzlis = allBuenzlis
-                .OrderBy(u => (u.getArticleLikes() + u.getCommentLikes()))
+                .OrderByDescending(u => (u.getArticleDislikes() + u.getCommentDislikes()))
                 .ToList()
                 .Take(3);
 
@@ -92,7 +92,7 @@ namespace ch.gibz.m151.projekt.Business.UserLogic
             var allBuenzlis = GetApplicationUsers();
 
             var topDbBuenzlis = allBuenzlis
-                .OrderBy(u => u.getArticleLikes())
+                .OrderByDescending(u => u.getArticleDislikes())
                 .ToList()
                 .Take(3);
 
@@ -106,7 +106,7 @@ namespace ch.gibz.m151.projekt.Business.UserLogic
             var allBuenzlis = GetApplicationUsers();
 
             var topDbBuenzlis = allBuenzlis
-                .OrderBy(u => u.getCommentLikes())
+                .OrderByDescending(u => u.getCommentDislikes())
                 .ToList()
                 .Take(3);
 
@@ -157,11 +157,11 @@ namespace ch.gibz.m151.projekt.Business.UserLogic
 
         private void AddRankingBuenzli(List<User> buenzlis)
         {
-            int currentRank = 1;
+            int currentRank = 3;
             foreach (User buenzli in buenzlis)
             {
                 buenzli.BuenzliRanking = currentRank;
-                currentRank++;
+                currentRank--;
             }
         }
 
