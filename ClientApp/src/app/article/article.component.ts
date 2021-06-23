@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthorizeService } from 'src/api-authorization/authorize.service';
+import { ArticleLike } from 'src/data/models/articleLike';
 import { Comment } from 'src/data/models/comment';
 import { UserSummary } from 'src/data/models/user';
 import { ArticleService } from 'src/data/services/article.service';
@@ -109,29 +110,21 @@ export class ArticleComponent implements OnInit {
     });
   }
 
-  async likeArticle() {
-    this.articleService.likeArticle(this.article.id).subscribe(async (alike) => {
-      if(alike == null){
-        const user = await this.authorizeService.getUser().toPromise();
-        let index = this.article.beitragLikes.indexOf(this.article.beitragLikes.find(l => l.user.name == user.name));
-        this.article.beitragLikes.splice(index, 1);
-      } else{
-        this.article.beitragLikes.push(alike);
-      }
-      this.toggleLikes();
+  likeArticle() {
+    this.articleService.likeArticle(this.article.id).subscribe(() => {
+      this.liked = !this.liked;
+      let like = new ArticleLike();
+      like.istDislike = false;
+      this.article.beitragLikes.push(like);
     });
   }
 
-  async dislikeArticle() {
-    this.articleService.dislikeArticle(this.article.id).subscribe(async (alike) => {
-      if(alike == null){
-        const user = await this.authorizeService.getUser().toPromise();
-        let index = this.article.beitragLikes.indexOf(this.article.beitragLikes.find(l => l.user.name == user.name));
-        this.article.beitragLikes.splice(index, 1);
-      } else{
-        this.article.beitragLikes.push(alike);
-      }
-      this.toggleLikes();
+  dislikeArticle() {
+    this.articleService.dislikeArticle(this.article.id).subscribe(() => {
+      this.disliked = !this.disliked
+      let like = new ArticleLike();
+      like.istDislike = true;
+      this.article.beitragLikes.push(like);
     });
   }
 }

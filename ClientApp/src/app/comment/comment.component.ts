@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AuthorizeService } from 'src/api-authorization/authorize.service';
 import { Comment } from 'src/data/models/comment';
+import { CommentLike } from 'src/data/models/commentLike';
 import { CommentService } from 'src/data/services/comment.service';
 
 @Component({
@@ -37,36 +38,21 @@ export class CommentComponent implements OnInit {
     })
   }
 
-  private toggleLikes(){
-    this.authorizeService.getUser().toPromise().then(user => {
-      this.liked = this.comment.likes.find(cl => !cl.istDislike && cl.user.name == user.name) ? true : false;
-      this.disliked = this.comment.likes.find(cl => cl.istDislike && cl.user.name == user.name) ? true : false;
-    })
-  }
-
   likeComment(){
-    this.commentService.likeComment(this.comment.id).subscribe(async (alike) => {
-      if(alike == null){
-        const user = await this.authorizeService.getUser().toPromise();
-        let index = this.comment.likes.indexOf(this.comment.likes.find(l => l.user.name == user.name));
-        this.comment.likes.splice(index, 1);
-      } else{
-        this.comment.likes.push(alike);
-      }
-      this.toggleLikes();
+    this.commentService.likeComment(this.comment.id).subscribe(() => {
+      this.liked = !this.liked
+      let mockLike = new CommentLike();
+      mockLike.istDislike = false;
+      this.comment.likes.push(mockLike);
     });
   }
 
   dislikeComment(){
-    this.commentService.dislikeComment(this.comment.id).subscribe(async (alike) => {
-      if(alike == null){
-        const user = await this.authorizeService.getUser().toPromise();
-        let index = this.comment.likes.indexOf(this.comment.likes.find(l => l.user.name == user.name));
-        this.comment.likes.splice(index, 1);
-      } else{
-        this.comment.likes.push(alike);
-      }
-      this.toggleLikes();
+    this.commentService.dislikeComment(this.comment.id).subscribe(() => {
+      this.disliked = !this.disliked
+      let mockLike = new CommentLike();
+      mockLike.istDislike = true;
+      this.comment.likes.push(mockLike);
     });
   }
 

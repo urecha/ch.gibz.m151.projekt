@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AuthorizeService } from 'src/api-authorization/authorize.service';
+import { ArticleLike } from 'src/data/models/articleLike';
 import { ArticleService } from 'src/data/services/article.service';
 import { ArticleSummary } from '../../data/models/article';
 
@@ -31,29 +32,21 @@ export class ArticleSummaryComponent implements OnInit {
     })
   }
 
-  async likeArticle() {
-    this.articleService.likeArticle(this.article.id).subscribe(async (alike) => {
-      if(alike == null){
-        const user = await this.authorizeService.getUser().toPromise();
-        let index = this.article.beitragLikes.indexOf(this.article.beitragLikes.find(l => l.user.name == user.name));
-        this.article.beitragLikes.splice(index, 1);
-      } else{
-        this.article.beitragLikes.push(alike);
-      }
-      this.toggleLikes();
+  likeArticle() {
+    this.articleService.likeArticle(this.article.id).subscribe(() => {
+      this.liked = !this.liked;
+      let like = new ArticleLike();
+      like.istDislike = false;
+      this.article.beitragLikes.push(like);
     });
   }
 
-  async dislikeArticle() {
-    this.articleService.dislikeArticle(this.article.id).subscribe(async (alike) => {
-      if(alike == null){
-        const user = await this.authorizeService.getUser().toPromise();
-        let index = this.article.beitragLikes.indexOf(this.article.beitragLikes.find(l => l.user.name == user.name));
-        this.article.beitragLikes.splice(index, 1);
-      } else{
-        this.article.beitragLikes.push(alike);
-      }
-      this.toggleLikes();
+  dislikeArticle() {
+    this.articleService.dislikeArticle(this.article.id).subscribe(() => {
+      this.disliked = !this.disliked
+      let like = new ArticleLike();
+      like.istDislike = true;
+      this.article.beitragLikes.push(like);
     });
   }
 

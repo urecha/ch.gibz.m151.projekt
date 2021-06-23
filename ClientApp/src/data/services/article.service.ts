@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Article, ArticleSummary } from '../models/article';
-import { ArticleLike } from '../models/articleLike';
 
 @Injectable({
   providedIn: 'root'
@@ -80,20 +79,19 @@ export class ArticleService {
   /**
    * Likes or unlikes an article, depending on whether it was liked or not before
    */
-   likeArticle(id: number): Observable<ArticleLike>{
-     const requestUrl = `${this.baseRoute}/${id}/like`;
-     console.log("Like pressed");
+   likeArticle(id: number): Observable<void>{
+    const requestUrl = `${this.baseRoute}/${id}/like`;
 
-    return this.httpClient.get<ArticleLike>(requestUrl);
+    return this.httpClient.get<void>(requestUrl);
   }
 
   /**
    * Dislikes or un-dislikes an article, depending on whether it was unliked or not before
    */
-  dislikeArticle(id: number): Observable<ArticleLike>{
+  dislikeArticle(id: number): Observable<void>{
     const requestUrl = `${this.baseRoute}/${id}/dislike`;
 
-    return this.httpClient.get<ArticleLike>(requestUrl);
+    return this.httpClient.get<void>(requestUrl);
   }
   
 }
