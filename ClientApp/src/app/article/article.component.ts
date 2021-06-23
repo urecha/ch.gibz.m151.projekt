@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { AuthorizeService } from 'src/api-authorization/authorize.service';
 import { ArticleLike } from 'src/data/models/articleLike';
 import { Comment } from 'src/data/models/comment';
@@ -26,6 +27,8 @@ export class ArticleComponent implements OnInit {
 
   liked: boolean;
   disliked: boolean;
+
+  isAuthenticated: Observable<boolean>;
 
   get likes(): number{
     if(!this.article.beitragLikes || !this.article.beitragLikes.length) return 0;
@@ -77,6 +80,7 @@ export class ArticleComponent implements OnInit {
         }
       }
     })
+    this.isAuthenticated = this.authorizeService.isAuthenticated();
   }
 
   private toggleLikes(){

@@ -41,14 +41,14 @@
                     Verzapft vom <span class="text-muted">{{article.autor.name}}</span> am <span class="text-muted">{{article.datum | date:'d. MMM yy'}}</span>
                 </div>
                 <div class="col-auto mr-2">
-                    <a class="clickable" title="findi laess" (click)="likeArticle($event)" [style.color]="liked ? '#0066cc' : 'black'"><i class="fa fa-thumbs-up ml-1"></i> {{likes}}</a>
-                    <a class="clickable" title="findi chabis" (click)="dislikeArticle()" [style.color]="disliked ? 'brown' : 'black'"><i class="fa fa-poo ml-1"></i> {{dislikes}}</a>
+                    <span class="clickable" title="findi laess" (click)="likeArticle($event)" [style.color]="liked ? '#0066cc' : 'black'"><i class="fa fa-thumbs-up ml-1"></i> {{likes}}</span>
+                    <span class="clickable" title="findi chabis" (click)="dislikeArticle()" [style.color]="disliked ? 'brown' : 'black'"><i class="fa fa-poo ml-1"></i> {{dislikes}}</span>
                   </div>
             </footer>
         </div>
     </div>
     <aside *ngIf="!editMode" class="col-4 comments my-4">
-        <button class="btn btn-block btn-outline-secondary my-2" (click)="commentMode = true;">
+        <button *ngIf="isAuthenticated | async" class="btn btn-block btn-outline-secondary my-2" (click)="commentMode = true;">
             <i class="fa fa-plus-circle"></i>
              Din senf dezuegeh
         </button>
