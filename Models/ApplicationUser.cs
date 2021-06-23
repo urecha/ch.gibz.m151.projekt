@@ -26,16 +26,22 @@ namespace ch.gibz.m151.projekt.Models
 
         public int getArticleLikes()
         {
-            return KommentarLikes
-                .Where(al => al.IstDislike == false)
-                .Count();
+            return Beitrags.Sum(b => b.GetTotalLikes());
         }
 
         public int getCommentLikes()
         {
-            return BeitragLikes
-                .Where(cl => cl.IstDislike == false)
-                .Count();
+            return Kommentars.Sum(k => k.GetTotalLikes());
+        }
+
+        public int getArticleDislikes()
+        {
+            return Beitrags.Sum(b => b.GetTotalDislikes());
+        }
+
+        public int getCommentDislikes()
+        {
+            return Kommentars.Sum(k => k.GetTotalDislikes());
         }
     }
 
