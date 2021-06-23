@@ -7,6 +7,14 @@ namespace ch.gibz.m151.projekt.Models
 {
     public partial class BeitragLike
     {
+        public BeitragLike() { }
+        public BeitragLike(Beitrag beitrag, ApplicationUser user, bool isDislike)
+        {
+            Beitrag = beitrag;
+            User = user;
+            IstDislike = isDislike;
+        }
+
         public int Id { get; set; }
         public bool? IstDislike { get; set; }
 
