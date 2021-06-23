@@ -91,6 +91,14 @@ namespace ch.gibz.m151.projekt.Controllers
             return Ok();
         }
 
+        [HttpGet]
+        [Route("{id}/dislike")]
+        public IActionResult DislikeArticle(int id)
+        {
+            beitragService.DislikeArticle(id);
+            return Ok();
+        }
+
         private ApplicationUser GetApplicationUser()
         {
             var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
