@@ -85,6 +85,7 @@ namespace ch.gibz.m151.projekt.Controllers
 
         [HttpGet]
         [Route("{id}/like")]
+        [Authorize]
         public IActionResult LikeArticle(int id)
         {
             beitragService.LikeArticle(id);
@@ -93,6 +94,7 @@ namespace ch.gibz.m151.projekt.Controllers
 
         [HttpGet]
         [Route("{id}/dislike")]
+        [Authorize]
         public IActionResult DislikeArticle(int id)
         {
             beitragService.DislikeArticle(id);

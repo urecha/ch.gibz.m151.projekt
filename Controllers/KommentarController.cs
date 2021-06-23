@@ -46,6 +46,7 @@ namespace ch.gibz.m151.projekt.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [Authorize]
         public IActionResult DeleteComment([FromRoute] int id)
         {
             kommentarService.DeleteComment(id);
@@ -62,6 +63,7 @@ namespace ch.gibz.m151.projekt.Controllers
 
         [HttpGet]
         [Route("{id}/like")]
+        [Authorize]
         public IActionResult LikeComment(int id)
         {
             kommentarService.LikeComment(id);
@@ -70,6 +72,7 @@ namespace ch.gibz.m151.projekt.Controllers
 
         [HttpGet]
         [Route("{id}/dislike")]
+        [Authorize]
         public IActionResult DislikeComment(int id)
         {
             kommentarService.DislikeComment(id);
