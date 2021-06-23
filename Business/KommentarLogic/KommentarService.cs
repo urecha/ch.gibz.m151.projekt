@@ -80,5 +80,31 @@ namespace ch.gibz.m151.projekt.Business.KommentarLogic
         {
             return _context.Beitrags.Where(b => b.Id == id).FirstOrDefault();
         }
+
+        public void LikeComment(int id)
+        {
+            var toLike = _context.Kommentars
+                .Where(k => k.Id == id)
+                .FirstOrDefault();
+            KommentarLike newLike = new KommentarLike();
+            newLike.Kommentar = toLike;
+            newLike.IstDislike = false;
+            newLike.User = GetApplicationUser();
+            toLike.KommentarLikes.Add(newLike);
+            _context.SaveChanges();
+        }
+
+        public void DislikeComment(int id)
+        {
+            var toLike = _context.Kommentars
+                .Where(k => k.Id == id)
+                .FirstOrDefault();
+            KommentarLike newLike = new KommentarLike();
+            newLike.Kommentar = toLike;
+            newLike.IstDislike = true;
+            newLike.User = GetApplicationUser();
+            toLike.KommentarLikes.Add(newLike);
+            _context.SaveChanges();
+        }
     }
 }
