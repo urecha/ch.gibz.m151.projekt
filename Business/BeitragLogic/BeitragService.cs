@@ -28,6 +28,8 @@ namespace ch.gibz.m151.projekt.Business
             var Beitrag = _context.Beitrags
                 .Where(b => b.Id == id)
                 .Include(b => b.Autor)
+                .Include(b => b.BeitragLikes)
+                .ThenInclude(l => l.User)
                 .Include(b => b.Kommentars)
                 .ThenInclude(k => k.KommentarLikes)
                 .Include(b => b.Kommentars)
