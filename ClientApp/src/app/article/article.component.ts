@@ -70,12 +70,12 @@ export class ArticleComponent implements OnInit {
           try {
             this.loading = true;
             this.article = await this.articleService.get(params.id).toPromise();
-
-            this.toggleLikes();
+            
           } catch (error) {
             console.log(error);
           } finally {
             this.loading = false;
+            this.toggleLikes();
           }
         }
       }
@@ -84,6 +84,9 @@ export class ArticleComponent implements OnInit {
   }
 
   private toggleLikes(){
+    if(!this.article) {
+      return;
+    }
     this.authorizeService.getUser().subscribe(user => {
       this.liked = this.article.beitragLikes.find(bl => !bl.istDislike && bl.user.name == user.name) ? true : false;
       this.disliked = this.article.beitragLikes.find(bl => bl.istDislike && bl.user.name == user.name) ? true : false;

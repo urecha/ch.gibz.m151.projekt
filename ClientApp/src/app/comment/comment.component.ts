@@ -37,6 +37,7 @@ export class CommentComponent implements OnInit {
   }
 
   private toggleLikes(){
+    if(!this.comment) return;
     this.authorizeService.getUser().subscribe(user => {
       this.liked = this.comment.likes.find(bl => !bl.istDislike && bl.user.name == user.name) ? true : false;
       this.disliked = this.comment.likes.find(bl => bl.istDislike && bl.user.name == user.name) ? true : false;
