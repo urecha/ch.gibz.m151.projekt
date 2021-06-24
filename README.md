@@ -7,6 +7,7 @@ Modul 151 Projekt "Bünzlitreff" von Urech Andrin &amp; Jagdt Andreas
 - Install the necessary Client (npm) and Server (NuGet) dependencies
 - Create a database named "BuenzliTreff" on your LocalDB Server.
   - Or use any other MSSQL server, as long as you adapt the connection string in `/appsettings.json`
+- Run the `update-database` command from within the package manager console to create the database entities.
 - Run the App from within VS with IIS Express
 
 ## Usage
