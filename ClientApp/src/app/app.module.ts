@@ -33,8 +33,9 @@ import { UserComponent } from './user/user.component';
     FormsModule,
     ApiAuthorizationModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'heimet', component: HomeComponent},
       { path: 'article/:id', component: ArticleComponent },
+      { path: '**', redirectTo: 'heimet', pathMatch: 'full'}
     ])
   ],
   providers: [
