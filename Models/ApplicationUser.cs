@@ -19,10 +19,30 @@ namespace ch.gibz.m151.projekt.Models
         public string Name { get; set; }
         public string Password { get; set; }
 
-        public virtual ICollection<BeitragLike> BeitragLikes { get; set; }
-        public virtual ICollection<Beitrag> Beitrags { get; set; }
-        public virtual ICollection<KommentarLike> KommentarLikes { get; set; }
-        public virtual ICollection<Kommentar> Kommentars { get; set; }
+        public ICollection<BeitragLike> BeitragLikes { get; set; }
+        public ICollection<Beitrag> Beitrags { get; set; }
+        public ICollection<KommentarLike> KommentarLikes { get; set; }
+        public ICollection<Kommentar> Kommentars { get; set; }
+
+        public int getArticleLikes()
+        {
+            return Beitrags.Sum(b => b.GetTotalLikes());
+        }
+
+        public int getCommentLikes()
+        {
+            return Kommentars.Sum(k => k.GetTotalLikes());
+        }
+
+        public int getArticleDislikes()
+        {
+            return Beitrags.Sum(b => b.GetTotalDislikes());
+        }
+
+        public int getCommentDislikes()
+        {
+            return Kommentars.Sum(k => k.GetTotalDislikes());
+        }
     }
 
 }

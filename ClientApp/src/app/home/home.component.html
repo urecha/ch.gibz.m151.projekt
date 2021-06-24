@@ -1,12 +1,71 @@
-<h1>Hello, world!</h1>
+<div class="row container-fluid">
+  <article class="col-8">
+    <div class="container row p-2 helper-bar">
+      <div class="col-8">
+        <label class="text-muted text-small mr-2">Sortiere nach</label>
+        <div class="abegumper">
+          <span><i class="fa mr-1" [ngClass]="getIconClassForSortingMethod(currentSortingMethod)"></i>{{currentSortingMethod}}</span>
+          <div class="abegumper-content">
+            <div class="abegumper-item" (click)="selectSortingMethod(SortingMethod.HOTTEST)">
+              <a><i class="fa fa-fire"></i> Laessigkeit</a>
+            </div>
+            <div class="abegumper-item" (click)="selectSortingMethod(SortingMethod.SHITTIEST)">
+              <a><i class="fa fa-poo"></i> Chabis</a>
+            </div>
+            <div class="abegumper-item" (click)="selectSortingMethod(SortingMethod.LATEST)">
+              <a><i class="fa fa-sun"></i> Neueschtem</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span *ngIf="isAuthenticated | async else hint" class="col-auto clickable" (click)="createArticle()" [style.align-self]="'center'"><i class="fa fa-plus-square"></i> Öppis verzapfe</span>
+      <ng-template #hint>
+        <span class="col-auto">Ilogge zum metmache!</span>
+      </ng-template>
+    </div>
 
-<p>Please go and f*** yourself</p>
+    <div class="articles" *ngIf="!loading else amlade">     
+      <div *ngFor="let article of articles">
+        <app-article-summary [article]="article"></app-article-summary>
+      </div>
+    </div>
+    <ng-template #amlade>
+      <div class="d-flex justify-content-center mt-2">
+        <i class="fa fa-spinner fa-spin"></i>
+      </div>
+    </ng-template>
+  </article>
 
-<label>Write something here and then we save it. (Not yet)</label>
-<textarea [(ngModel)]="article"></textarea>
-
-<div *ngFor="let article of articles">
-  <h5>{{article.titel}}<small>{{article.autor}}</small></h5>
-  <p>{{article.inhalt}}</p>
-  <div><span>{{article.beitragLikes}} Likes</span></div>
+  <aside class="col-4 p-2 classments">
+    <div class="buenzli-helper-bar">
+      <label class="text-muted text-small mr-2">Ranglischte sortiere nach</label>
+        <div class="abegumper">
+          <span><i class="fa mr-1" [ngClass]="getIconClassForBuenzliSortingMethod(currentBuenzliSortingMethod)"></i>{{currentBuenzliSortingMethod}}</span>
+          <div class="abegumper-content">
+            <div class="abegumper-item" (click)="selectBuenzliSortingMethod(BuenzliSortingMethod.OVERALL)">
+              <a><i class="fa fa-trophy"></i> Allgemein</a>
+            </div>
+            <div class="abegumper-item" (click)="selectBuenzliSortingMethod(BuenzliSortingMethod.ARTICLES)">
+              <a><i class="fa fa-newspaper"></i> Nome artikel</a>
+            </div>
+            <div class="abegumper-item" (click)="selectBuenzliSortingMethod(BuenzliSortingMethod.COMMENTS)">
+              <a><i class="fa fa-comment-dots"></i> Nome kommentaer</a>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="classment">
+    <h5><i class="fa fa-fire mr-1"></i>Top bünzlis</h5>
+      <ng-container *ngIf="!loadingBuenzlis else amlade">
+        <app-user-summary *ngFor="let buenzli of buenzlis" [user]="buenzli"></app-user-summary>
+      </ng-container>
+    </div>
+    <hr>
+    <div class="classment">
+    <h5><i class="fa fa-poo mr-1"></i>Gröschti halbschüeh</h5>
+      <ng-container *ngIf="!loadingBuenzlis else amlade">
+        <app-user-summary *ngFor="let halbschuh of halbschueh" [isTopBuenzli]="false" [user]="halbschuh"></app-user-summary>
+      </ng-container>
+    </div>
+  </aside>
 </div>

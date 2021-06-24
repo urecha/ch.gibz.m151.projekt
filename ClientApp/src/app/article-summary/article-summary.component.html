@@ -1,0 +1,17 @@
+<div class="article-summary m-2 pl-4">
+  <header class="row text-small">
+    <div class="col text-muted">
+      Verzapft vom {{article.autor.name}} am {{article.datum | date:'d. MMM yy'}}
+    </div>
+    <div class="col-auto mr-2">
+      <span class="clickable" title="findi laess" (click)="likeArticle()" [style.color]="liked ? '#0066cc' : 'black'"><i class="fa fa-thumbs-up ml-1" [style.color]=""></i> {{likes}}</span>
+      <span class="clickable" title="findi chabis" (click)="dislikeArticle()" [style.color]="disliked ? 'brown' : 'black'"><i class="fa fa-poo ml-1"></i> {{dislikes}}</span>
+    </div>
+  </header>
+  <a [routerLink]="'/article/' + article.id">
+    <div>
+      <h5>{{article.titel}}</h5>
+      <p>{{article.inhaltPreview}}</p>
+    </div>
+  </a>
+</div>

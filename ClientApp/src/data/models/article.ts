@@ -1,10 +1,34 @@
+import { ArticleLike } from "./articleLike";
+import { Comment } from "./comment";
+import { UserSummary } from "./user";
 
 export class Article {
-  autor: string;
+  id: number;
+
+  autor: UserSummary;
 
   titel: string;
+  
+  datum: Date;
 
   inhalt: string;
 
-  beitragLikes: number;
+  beitragLikes: ArticleLike[];
+
+  kommentare: Comment[];
+}
+
+export class ArticleSummary{
+  id: number;
+  
+  autor: UserSummary;
+  
+  titel: string;
+  
+  inhaltPreview: string;
+  
+  datum: Date;
+  
+  beitragLikes: ArticleLike[];
+
 }

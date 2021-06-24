@@ -386,8 +386,8 @@ namespace ch.gibz.m151.projekt.Data.Migrations
                     b.Property<int?>("BeitragId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IstDislike")
-                        .HasColumnType("int");
+                    b.Property<bool?>("IstDislike")
+                        .HasColumnType("bit");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -432,6 +432,9 @@ namespace ch.gibz.m151.projekt.Data.Migrations
                     b.Property<int?>("BeitragId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("Datum")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Inhalt")
                         .HasColumnType("nvarchar(max)");
 
@@ -454,8 +457,8 @@ namespace ch.gibz.m151.projekt.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("IstDislike")
-                        .HasColumnType("int");
+                    b.Property<bool?>("IstDislike")
+                        .HasColumnType("bit");
 
                     b.Property<int>("KommentarId")
                         .HasColumnType("int");

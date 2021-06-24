@@ -3,7 +3,7 @@
     class="navbar navbar-expand-sm navbar-toggleable-sm bg-dark bg-black border-bottom box-shadow mb-3"
   >
     <div class="container">
-      <a class="navbar-brand text-light" [routerLink]="['/']">Bünzlitreff</a>
+      <a class="navbar-brand text-light" [routerLink]="['/']"><span class="logo mr-2"><img src="../../assets/images/logo.png" /></span>Bünzlitreff</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -25,7 +25,7 @@
             [routerLinkActive]="['link-active']"
             [routerLinkActiveOptions]="{ exact: true }"
           >
-            <a class="nav-link text-light" [routerLink]="['/']">Home</a>
+            <a class="nav-link text-light" [routerLink]="['/']">Heimet</a>
           </li>
         </ul>
         <app-login-menu></app-login-menu>

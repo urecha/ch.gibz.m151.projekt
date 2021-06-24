@@ -1,0 +1,12 @@
+.clickable{
+    cursor: pointer;
+}
+.article-summary{
+    box-shadow: 2px 3px lightgray;
+    text-decoration: none;
+    color: black;
+}
+a{
+    text-decoration: none;
+    color: black;
+}

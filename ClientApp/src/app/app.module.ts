@@ -11,6 +11,10 @@ import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.
 import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
 import { ArticleComponent } from './article/article.component';
+import { ArticleSummaryComponent } from './article-summary/article-summary.component';
+import { CommentComponent } from './comment/comment.component';
+import { UserSummaryComponent } from './user-summary/user-summary.component';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +22,10 @@ import { ArticleComponent } from './article/article.component';
     NavMenuComponent,
     HomeComponent,
     ArticleComponent,
+    ArticleSummaryComponent,
+    CommentComponent,
+    UserSummaryComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -25,8 +33,9 @@ import { ArticleComponent } from './article/article.component';
     FormsModule,
     ApiAuthorizationModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'article', component: ArticleComponent, canActivate: [AuthorizeGuard] },
+      { path: 'heimet', component: HomeComponent},
+      { path: 'article/:id', component: ArticleComponent },
+      { path: '**', redirectTo: 'heimet', pathMatch: 'full'}
     ])
   ],
   providers: [

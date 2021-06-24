@@ -1,0 +1,36 @@
+.article-container{
+    background-color: white;
+    border: 1px solid lightgray;
+}
+.article{
+    margin: 15px;
+    padding: 3px;
+    width: 100%;
+}
+.clickable{
+    cursor: pointer;
+}
+.avis{
+    font-size: small;
+    font-style: italic;
+}
+.article-content{
+    border-bottom: 1px solid lightgray;
+    border-top: 1px solid lightgray;
+    min-height: 300px;
+}
+.corrected{
+    padding-left: 35px;
+}
+.comments{
+    height: 900px;
+    box-shadow: 2px 3px #eee;
+    overflow: auto;
+}
+.comment-create > textarea{
+    min-height: 60px;
+}
+.comment-saver{
+    position: relative;
+    right: -265px;
+}

@@ -1,1 +1,13 @@
-<p>comment works!</p>
+<div class="comment">
+    <h6>{{comment.autor.name}}<small> {{comment.datum | date:'d. MMM yy'}}</small></h6>
+    <p>
+        {{comment.inhalt}}
+    </p>
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-auto mr-2">
+            <span class="clickable" title="findi laess" (click)="likeComment()" [style.color]="liked ? '#0066cc' : 'black'"><i class="fa fa-thumbs-up ml-1"></i> {{actualLikes}}</span>
+            <span class="clickable" title="findi chabis" (click)="dislikeComment()" [style.color]="disliked ? 'brown' : 'black'"><i class="fa fa-poo ml-1"></i> {{dislikes}}</span>
+          </div>
+    </div>
+</div>

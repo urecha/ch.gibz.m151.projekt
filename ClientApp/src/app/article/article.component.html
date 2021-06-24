@@ -1,1 +1,81 @@
-<p>article works!</p>
+<div class="row" *ngIf="article else loading">
+    <div class="col row article p-2">
+        <div class="w-100">
+            <div *ngIf="!editMode else edit" class="article">
+                <div>
+                    <h3>{{article.titel}}</h3>
+                    <p class="article-content pt-4">
+                        {{article.inhalt}}
+                    </p>
+                </div>
+            </div>
+
+            <ng-template #edit>
+                <div class="article">
+                    <div>
+                        Neue biitrag erstelle
+                        <p class="text-muted avis">
+                            Dànk dra, mir lehned jeglichi haftig ab im fall das cybergmobbt wirsch oder suesch irgendwas. Poschte uf eigeni gfahr!<br>
+                            Soziali Medie hend en potenzielli Suchtgfahr und choend dis laebe starch beiflusse, also obacht!
+                        </p>
+                    </div>
+                    <hr>
+                    <div class="row mb-3">
+                        <div class="col-8">
+                            <div class="form-group">
+                                <label for="titel">Dr titu: </label>
+                                <input id="titel" class="form-control" [(ngModel)]="article.titel">
+                            </div>
+                            <label for="inhalt">Din chabis</label>
+                            <textarea id="inhalt" [(ngModel)]="article.inhalt" class="form-control">
+                            </textarea>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-outline-primary" (click)="saveArticle()"><i class="fa fa-save mr-1"></i>Isch guet</button>
+                </div>
+            </ng-template>
+
+            <footer *ngIf="!editMode" class="row">
+                <div class="col corrected">
+                    Verzapft vom <span class="text-muted">{{article.autor.name}}</span> am <span class="text-muted">{{article.datum | date:'d. MMM yy'}}</span>
+                </div>
+                <div class="col-auto mr-2">
+                    <span class="clickable" title="findi laess" (click)="likeArticle($event)" [style.color]="liked ? '#0066cc' : 'black'"><i class="fa fa-thumbs-up ml-1"></i> {{likes}}</span>
+                    <span class="clickable" title="findi chabis" (click)="dislikeArticle()" [style.color]="disliked ? 'brown' : 'black'"><i class="fa fa-poo ml-1"></i> {{dislikes}}</span>
+                  </div>
+            </footer>
+        </div>
+    </div>
+    <aside *ngIf="!editMode" class="col-4 comments my-4">
+        <button *ngIf="isAuthenticated | async" class="btn btn-block btn-outline-secondary my-2" (click)="commentMode = true;">
+            <i class="fa fa-plus-circle"></i>
+             Din senf dezuegeh
+        </button>
+        <ng-container *ngIf="commentMode">
+            <div class="comment-create">
+                <div class="form-group my-2">
+                    <label>Churzfassig</label>
+                    <input class="form-control" [(ngModel)]="commentTitel">
+                </div>
+                <div class="form-group my-2">
+                    <label>Lah's use</label>
+                    <textarea class="form-control my-2" [(ngModel)]="comment"></textarea>
+                </div>
+                <button class="btn btn-outline-secondary comment-saver" (click)="saveComment()">
+                    Usehaue
+                </button>
+            </div>
+            <hr>
+        </ng-container>
+        <ng-container *ngFor="let comment of article.kommentare">
+            <app-comment [comment]="comment"></app-comment>
+        </ng-container>
+    </aside>    
+</div>
+
+<ng-template #loading>
+    <div>
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+</ng-template>

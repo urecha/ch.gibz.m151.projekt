@@ -7,12 +7,20 @@ namespace ch.gibz.m151.projekt.Models
 {
     public partial class KommentarLike
     {
+        public KommentarLike() { }
+        public KommentarLike(Kommentar kommentar, ApplicationUser user, bool isDislike)
+        {
+            Kommentar = kommentar;
+            User = user;
+            IstDislike = isDislike;
+        }
+
         public int Id { get; set; }
         public int UserId { get; set; }
         public int KommentarId { get; set; }
-        public int? IstDislike { get; set; }
+        public bool? IstDislike { get; set; }
 
-        public virtual Kommentar Kommentar { get; set; }
-        public virtual ApplicationUser User { get; set; }
+        public Kommentar Kommentar { get; set; }
+        public ApplicationUser User { get; set; }
     }
 }
